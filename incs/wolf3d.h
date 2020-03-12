@@ -20,9 +20,10 @@
 # define WIN_TITLE		"Wolf 3D"
 # define	FD_ERR		2
 # define	NO_ERR		0
-# define	MEM_ERR		-2
 # define	SIZE_ERR	-1
+# define	MEM_ERR		-2
 # define	VERSION_ERR	-3
+# define	SDL_ERR		-4
 
 typedef double		numeric;
 

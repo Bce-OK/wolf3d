@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:17:49 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/03/12 21:11:46 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/03/12 21:47:18 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,16 @@ void		event_loop(t_game *game)
 	}
 }
 
-SDL_Window	*create_window(void)
+int			create_window(t_game *game)
 {
-	SDL_Window		*wnd;
-	SDL_Renderer	*rnd;
-
-	wnd = SDL_CreateWindow(WIN_TITLE, WIN_POS_X, WIN_POS_Y, WIN_SIZE, WIN_SIZE
+	game->wnd = SDL_CreateWindow(WIN_TITLE, WIN_POS_X, WIN_POS_Y, WIN_SIZE, WIN_SIZE
 		, SDL_WINDOW_RESIZABLE);
-	rnd = SDL_CreateRenderer(wnd, 0, SDL_RENDERER_PRESENTVSYNC);
-	return (wnd);
+	if (!game->wnd)
+		return (SDL_ERR);
+	game->rnd = SDL_CreateRenderer(game->wnd, 0, SDL_RENDERER_PRESENTVSYNC);
+	if (!game->rnd)
+		return (SDL_ERR);
+	return (NO_ERR);
 }
 
 int			main(int argc, char **argv)
@@ -78,12 +79,13 @@ int			main(int argc, char **argv)
 	t_game			*game;
 
 	SDL_Init(SDL_INIT_VIDEO);
-	game = (t_game*)ft_memalloc(sizeof(game));
+	game = (t_game*)ft_memalloc(sizeof(*game));
 	if (argc > 1)
 		game->level = load_map_from_file(argv[1]);
 	else
 		return (0);
-	game->wnd = create_window();
+	if (create_window(game) != NO_ERR)
+		return (SDL_ERR);
 	game->state = G_MENU;
 	event_loop(game);
 	ft_memdel((void**)&game);
