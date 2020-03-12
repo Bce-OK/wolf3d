@@ -1,2 +1,2 @@
 # wolf3d
-woldf3d project for school21 
+wolf3d project for school21 
