@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/03/11 20:09:03 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/03/15 15:21:35 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define	MEM_ERR		-2
 # define	VERSION_ERR	-3
 # define	SDL_ERR		-4
+# define	MAP_ERR		-5
+# define	PLY_ERR		-6
 
 typedef double		numeric;
 
@@ -45,7 +47,10 @@ typedef struct		s_player {
 typedef	struct		s_map {
 	int				size_x;
 	int				size_y;
-	int				*array;
+	char			*array;
+	int				startpos;
+	int				endpos;
+	int				version;
 }					t_map;
 
 typedef struct		s_game {

@@ -6,7 +6,7 @@
 #    By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 20:18:14 by hgreenfe          #+#    #+#              #
-#    Updated: 2020/03/11 20:09:03 by hgreenfe         ###   ########.fr        #
+#    Updated: 2020/03/15 15:49:05 by hgreenfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ $(OBJDIR):
 libs:
 	make -C $(LIBDIR)
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
+$(OBJDIR)%.o: $(SRCDIR)%.c $(INCDIR1)
 	@echo "test" $@ "" $(<) ""
 	$(CC) $(CCFLAGS) -c -o $@ $<
 

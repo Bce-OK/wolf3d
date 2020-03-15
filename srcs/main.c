@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:17:49 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/03/12 21:47:18 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/03/15 15:30:59 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "SDL2/SDL.h"
 #include "wolf3d.h"
+
+#define SIZE_RECT	20
 
 int			event_keyup(SDL_Event *event, t_game *game)
 {
@@ -36,9 +38,33 @@ int			event_mouse(SDL_Event *event, t_game *game)
 	return (0);
 }
 
+void		render_rect(t_game *game, char type, int x, int y)
+{
+	SDL_Rect	rect;
+
+	rect.x = x * SIZE_RECT;
+	rect.y = y * SIZE_RECT;
+	rect.w = SIZE_RECT;
+	rect.h = SIZE_RECT;
+	SDL_SetRenderDrawColor(game->rnd,
+		(type & 0x01) * 255, (type & 0x02) * 255, (type & 0x04) * 255, 255);
+	SDL_RenderFillRect(game->rnd, &rect);
+}
+
 void		render_game(t_game *game)
 {
-	(void)game;
+	int		i;
+
+	i = 0;
+	SDL_SetRenderDrawColor(game->rnd, 0, 0, 0, 0);
+	SDL_RenderClear(game->rnd);
+	while (i < game->level->size_x * game->level->size_y)
+	{
+		render_rect(game, (char)(game->level->array[i] & 0xff),
+			i % game->level->size_x, i / game->level->size_x);
+		++i;
+	}
+	SDL_RenderPresent(game->rnd);
 }
 
 void		event_loop(t_game *game)
@@ -64,8 +90,8 @@ void		event_loop(t_game *game)
 
 int			create_window(t_game *game)
 {
-	game->wnd = SDL_CreateWindow(WIN_TITLE, WIN_POS_X, WIN_POS_Y, WIN_SIZE, WIN_SIZE
-		, SDL_WINDOW_RESIZABLE);
+	game->wnd = SDL_CreateWindow(WIN_TITLE,
+		WIN_POS_X, WIN_POS_Y, WIN_SIZE, WIN_SIZE, SDL_WINDOW_RESIZABLE);
 	if (!game->wnd)
 		return (SDL_ERR);
 	game->rnd = SDL_CreateRenderer(game->wnd, 0, SDL_RENDERER_PRESENTVSYNC);

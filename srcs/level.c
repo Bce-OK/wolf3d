@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 21:43:50 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/03/12 21:09:35 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/03/15 15:46:13 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <fcntl.h>
 #include <unistd.h>
-#define VERSION 0
+#define ACTUAL_VERSION 1
 
 int		read_buffer(int fd, size_t size, void *ret)
 {
@@ -55,29 +55,49 @@ int		mapreader0(int fd, t_map *map)
 		return (err);
 	i = 0;
 	int_buf = 0;
-	while (read_buffer(fd, sizeof(char), &int_buf) == NO_ERR)
-	{
-		if (i > map->size_x * map->size_y)
-		{
-			ft_putendl_fd(
-				"WARNING!\tmap size bigger than map size has been set."
-				" File reading was interrupted.", FD_ERR);
-			break ;
-		}
-		map->array[i] = int_buf;
-		++i;
-	}
-	if (i < map->size_x * map->size_y)
-		ft_putendl_fd(
-			"WARNING!\tmap size less than map size has been set."
-			" Map tail was zero-filled.", FD_ERR);
+	if (read_buffer(fd,
+		sizeof(char) * map->size_y * map->size_x, map->array) != NO_ERR)
+		return (MAP_ERR);
 	return (NO_ERR);
+}
+
+int		player_reader(int fd, t_map *map)
+{
+	int		buf_int;
+
+	buf_int = 0;
+	if (map)
+	{
+		if (read_buffer(fd, sizeof(int), &buf_int) != NO_ERR)
+			return (VERSION_ERR);
+		map->startpos = buf_int;
+		buf_int = 0;
+		if (read_buffer(fd, sizeof(int), &buf_int) != NO_ERR)
+			return (VERSION_ERR);
+		map->endpos = buf_int;
+		if (map->startpos < 0 || map->startpos >= map->size_x * map->size_y
+			|| map->endpos < 0 || map->endpos >= map->size_x * map->size_y)
+			return (PLY_ERR);
+		return (NO_ERR);
+	}
+	else
+		return (MAP_ERR);
 }
 
 int		mapreader(int fd, t_map *map, int version)
 {
+	int		err;
+
 	if (version == 0)
 		return (mapreader0(fd, map));
+	if (version == 1)
+	{
+		err = mapreader0(fd, map);
+		err |= player_reader(fd, map);
+		if (!err)
+			map->version = version;
+		return (err);
+	}
 	return (VERSION_ERR);
 }
 
