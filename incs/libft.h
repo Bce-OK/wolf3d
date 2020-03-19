@@ -14,7 +14,6 @@
 # define LIBFT_H
 # include <string.h>
 
-size_t				ft_strlen(const char *str);
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);
 char				*ft_strnew(size_t size);

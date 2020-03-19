@@ -23,7 +23,7 @@ LIBDIR = libs/libft/
 INCDIR1 = incs/
 INCSDL = ./SDL/include
 
-PATH_SDL := $(addsuffix /SDL, $(shell pwd))
+PATH_SDL := $(addsuffix /libs, $(shell pwd))
 SDL :=  $(PATH_SDL)/SDL2/build/.libs
 
 # used applications
@@ -61,7 +61,7 @@ LIBFLAGS = -L$(LIBDIR) -lft -L $(SDL) -lSDL2
 all: $(NAME)
 
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	mkdir $(OBJDIR)
 
 libs:
 	make -C $(LIBDIR)

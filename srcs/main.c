@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#define SDL_MAIN_HANDLED
 #include <stdio.h>
 #include "libft.h"
 #include "SDL2/SDL.h"
