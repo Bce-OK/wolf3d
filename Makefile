@@ -13,17 +13,20 @@
 # used variables
 NAME = wolf3d
 
-SRCDIR = srcs/
+SLASH = /
 
-OBJDIR = objs/
+SRCDIR = srcs
 
-LIBUIDIR = ./
-LIBDIR = libs/libft/
+OBJDIR = objs
 
-INCDIR1 = incs/
+LIBUIDIR = .
+LIBDIR = libs/libft
+
+INCDIR1 = incs
 INCSDL = ./SDL/include
 
-PATH_SDL := $(addsuffix /libs, $(shell pwd))
+# PATH_SDL := $(addsuffix /libs, $(shell pwd))
+PATH_SDL := $(addsuffix /libs, $(shell cd))
 SDL :=  $(PATH_SDL)/SDL2/build/.libs
 
 # used applications
@@ -43,8 +46,8 @@ HEADERS = $(INCDIR1)/SDL2/SDL.h
 SRCS = $(addsuffix .c, $(FILES))
 OBJS = $(addsuffix .o, $(FILES))
 
-FULL_SRCS = $(addprefix $(SRCDIR), $(SRCS))
-FULL_OBJS = $(addprefix $(OBJDIR), $(OBJS))
+FULL_SRCS = $(addprefix $(SRCDIR)/, $(SRCS))
+FULL_OBJS = $(addprefix $(OBJDIR)/, $(OBJS))
 
 FRAMEWORK = -framework OpenGL -framework Cocoa
 #  -framework iconv
@@ -76,7 +79,7 @@ $(SDL):
 
 $(NAME):libs $(SDL) $(OBJDIR) $(FULL_OBJS)
 	@echo test1
-	$(CC) $(CCFLAGS) -o $(NAME) $(LIBFLAGS) $(FULL_OBJS)
+	$(CC) $(CCFLAGS) -o $(NAME) $(FULL_OBJS) $(LIBFLAGS)
 
 clean:
 	make -C $(LIBDIR) clean
@@ -91,4 +94,3 @@ fclean: clean clean_sdl
 	$(RM) $(RMFLAGS) $(NAME)
 
 re: fclean all
-

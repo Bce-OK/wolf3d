@@ -15,6 +15,8 @@
 
 # define WOLF3D_H
 # define WIN_SIZE		512
+# define WIN_SIZE_W		640
+# define WIN_SIZE_H		480
 # define WIN_POS_X		512
 # define WIN_POS_Y		512
 # define WIN_TITLE		"Wolf 3D"
@@ -56,6 +58,8 @@ typedef	struct		s_map {
 typedef struct		s_game {
 	SDL_Window		*wnd;
 	SDL_Renderer	*rnd;
+	SDL_Texture		*texture;
+	SDL_Rect		*rect;
 	t_game_state	state;
 	t_player		*player;
 	t_map			*level;

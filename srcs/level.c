@@ -56,14 +56,10 @@ int		read_map_size(int fd, t_map *map)
 
 int		mapreader0(int fd, t_map *map)
 {
-	int		i;
-	int		int_buf;
 	int		err;
 
 	if ((err = read_map_size(fd, map)) != NO_ERR)
 		return (err);
-	i = 0;
-	int_buf = 0;
 	if (read_buffer(fd,
 		sizeof(char) * map->size_y * map->size_x, map->array) != NO_ERR)
 		return (MAP_ERR);
