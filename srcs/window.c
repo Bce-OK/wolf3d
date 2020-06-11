@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:15:03 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 16:15:18 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:51:16 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 
 int		create_renderer(t_game *game, int is_software)
 {
+	game->is_software = is_software;
 	game->surface = SDL_GetWindowSurface(game->wnd);
-	if (is_software)
+	if (!game->surface)
+		return (SDL_ERR);
+	if (game->is_software)
 		game->rnd = SDL_CreateSoftwareRenderer(game->surface);
 	else
 		game->rnd = SDL_CreateRenderer
-			(game->wnd, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+			(game->wnd, 0,
+			SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!game->rnd)
 		return (SDL_ERR);
 	return (NO_ERR);
@@ -40,12 +44,10 @@ int		create_window(t_game *game)
 								 SDL_WINDOW_OPENGL);
 	if (!game->wnd)
 		return (SDL_ERR);
-	if (create_renderer(game, 0) != NO_ERR)
+	if (create_renderer(game, 1) != NO_ERR)
 		return (SDL_ERR);
-	game->texture = SDL_CreateTexture(game->rnd,
-									  SDL_PIXELFORMAT_RGBA8888,
-									  SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W,
-									  WIN_SIZE_H);
+	game->texture = SDL_CreateTexture(game->rnd, SDL_PIXELFORMAT_RGBA8888,
+		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
 	if (!game->texture)
 		return (SDL_ERR);
 	SDL_SetRelativeMouseMode(1);

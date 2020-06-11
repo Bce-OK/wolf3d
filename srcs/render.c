@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 16:23:43 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:47:59 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	draw(t_game *game, int **pixels, int i, int column_h)
 	space = (game->rect->h - column_h) / 2;
 	while(r < column_h && (r + 1 + space) < game->rect->h)
 	{
-		(*pixels)[i*2 + (r + space) * game->rect->w] = 0xFFFFFF;
-		(*pixels)[i*2 + 1 + (r + space) * game->rect->w] = 0xFFFFFF;
+		(*pixels)[i * 2 + (r + space) * game->rect->w] = 0xffFFFFFFu;
+		(*pixels)[i * 2 + 1 + (r + space) * game->rect->w] = 0xffFFFFFFu;
 		r++;
 	}
 }
@@ -43,7 +43,8 @@ void	casting(t_game *game, int **pixels, numeric angle, int i)
 		cy = game->player->pos_y + t * sin(angle);
 		if (game->level->array[(int)cx + (int)cy * game->level->size_x] != 0)
 		{
-			column_h = (int)(game->rect->h / (t * cos(angle - game->player->watch_x)));
+			column_h = (int)(game->rect->h /
+				(t * cos(angle - game->player->watch_x)));
 			if (column_h > game->rect->h)
 				column_h = game->rect->h;
 			draw(game, pixels, i, column_h);
@@ -62,10 +63,22 @@ void	render(t_game *game, int **pixels)
 	while (i < game->rect->w/ 2)
 	{
 		angle = game->player->watch_x - (FOV / 2.0)
-				+ (FOV * i / (double)(game->rect->w / 2));
+				+ (FOV * i / (numeric)(game->rect->w / 2));
 		casting(game, pixels, angle, i);
 		i++;
 	}
+}
+
+int		software_render(t_game *game)
+{
+	int			*pixels;
+
+	SDL_LockSurface(game->surface);
+	pixels = game->surface->pixels;
+	ft_bzero(pixels, sizeof(int) * game->rect->w * game->rect->h);
+	render(game, &pixels);
+	SDL_UnlockSurface(game->surface);
+	return (NO_ERR);
 }
 
 int		render_level(t_game *game)
@@ -73,6 +86,8 @@ int		render_level(t_game *game)
 	int			*pixels;
 	int			pitch;
 
+	if (game->is_software)
+		return (software_render(game));
 	SDL_LockTexture(game->texture, NULL, (void **) &pixels, &pitch);
 	ft_bzero(pixels, sizeof(int) * game->rect->w * game->rect->h);
 	render(game, &pixels);

@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:14:16 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 16:22:52 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:50:46 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	render_game(t_game *game)
 	SDL_RenderClear(game->rnd);
 	render_level(game);
 	render_map(game);
-	SDL_RenderPresent(game->rnd);
+	if (game->is_software)
+		SDL_UpdateWindowSurface(game->wnd);
+	else
+		SDL_RenderPresent(game->rnd);
 }
 
 void	process_game(t_game *game)

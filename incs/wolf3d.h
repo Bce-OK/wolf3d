@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 16:25:42 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 17:08:57 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 # define	WIN_SIZE_W	1024
 # define	WIN_SIZE_H	720
-# define	WIN_POS_X	512
-# define	WIN_POS_Y	100
+# define	WIN_POS_X	SDL_WINDOWPOS_UNDEFINED
+# define	WIN_POS_Y	SDL_WINDOWPOS_UNDEFINED
 # define	WIN_TITLE	"Wolf 3D"
 # define 	SIZE_RECT	20
 
@@ -69,6 +69,7 @@ typedef struct		s_game {
 	t_game_state	state;
 	t_player		*player;
 	t_map			*level;
+	int				is_software;
 }					t_game;
 
 t_map	*load_map_from_file(char const *filename);
