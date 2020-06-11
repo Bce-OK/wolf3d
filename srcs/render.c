@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 17:47:59 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 18:46:45 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	draw(t_game *game, int **pixels, int i, int column_h)
 	space = (game->rect->h - column_h) / 2;
 	while(r < column_h && (r + 1 + space) < game->rect->h)
 	{
-		(*pixels)[i * 2 + (r + space) * game->rect->w] = 0xffFFFFFFu;
-		(*pixels)[i * 2 + 1 + (r + space) * game->rect->w] = 0xffFFFFFFu;
+		(*pixels)[i * 2 + (r + space) * game->rect->w] =
+			get_color_by_len(255, space, game->rect->h);
+		(*pixels)[i * 2 + 1 + (r + space) * game->rect->w] =
+			get_color_by_len(255, space, game->rect->h);
 		r++;
 	}
 }

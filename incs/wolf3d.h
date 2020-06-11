@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 17:08:57 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 18:41:12 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,16 @@ typedef struct		s_game {
 	int				is_software;
 }					t_game;
 
-t_map	*load_map_from_file(char const *filename);
-void	render_game(t_game *game);
-void	process_game(t_game *game);
-int		create_renderer(t_game *game, int is_software);
-int		create_window(t_game *game);
-int		destroy_window(t_game *game);
-void	event_loop(t_game *game);
-int		create_payer(t_game *game);
-void	render_map(t_game *game);
-int		render_level(t_game *game);
-
+t_map				*load_map_from_file(char const *filename);
+void				render_game(t_game *game);
+void				process_game(t_game *game);
+int					create_renderer(t_game *game, int is_software);
+int					create_window(t_game *game);
+int					destroy_window(t_game *game);
+void				event_loop(t_game *game);
+int					create_payer(t_game *game);
+void				render_map(t_game *game);
+int					render_level(t_game *game);
+unsigned int		get_color_by_len(unsigned char max_bright,
+	numeric length, numeric max_length);
 #endif //WOLF3D_H
