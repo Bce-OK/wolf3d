@@ -26,7 +26,14 @@ INCDIR1 = incs
 INCSDL = ./SDL/include
 
 # PATH_SDL := $(addsuffix /libs, $(shell pwd))
-PATH_SDL := $(addsuffix /libs, $(shell cd))
+
+ifeq ($(OS),Windows_NT)
+	CD := $(shell cd)
+else
+	CD := $(shell pwd)
+endif
+
+PATH_SDL := $(addsuffix /libs, $(CD))
 SDL :=  $(PATH_SDL)/SDL2/build/.libs
 
 # used applications
@@ -52,7 +59,7 @@ FULL_OBJS = $(addprefix $(OBJDIR)/, $(OBJS))
 FRAMEWORK = -framework OpenGL -framework Cocoa
 #  -framework iconv
 
-LIBFLAGS = -L$(LIBDIR) -lft -L $(SDL) -lSDL2
+LIBFLAGS = -L$(LIBDIR) -lft -L$(SDL) -lSDL2
 # -L $(LIBSDIR)$(LIBUIDIR) -l$(LIBUI)
 # -L $(SDLIMGDIR) -lSDL2_image
 

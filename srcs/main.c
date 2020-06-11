@@ -12,17 +12,17 @@
 
 #define SDL_MAIN_HANDLED
 
-#include <stdio.h>
 #include "libft.h"
 #include "SDL2/SDL.h"
 #include "wolf3d.h"
-#include <pthread.h>
-#include <mspcoll.h>
-#include <msputils.h>
+#include <math.h>
+#include <stdio.h>
 
-#define SIZE_RECT            20
+#define SIZE_RECT           20
 
-#define TIMEOUT_MILISEC        1000
+#define TIMEOUT_MILISEC     1000
+#define FOV 				(3.14159 / 3.0)
+
 
 int event_keyup(SDL_Event *event, t_game *game)
 {
@@ -42,7 +42,79 @@ int event_mouse(SDL_Event *event, t_game *game)
 {
 	(void) event;
 	(void) game;
+
+	if (event && event->type == SDL_MOUSEMOTION)
+	{
+		if (event->motion.xrel != 0)
+		{
+			game->player->watch_x += event->motion.xrel * 0.25;
+		}
+	}
 	return (NO_ERR);
+}
+
+
+void	draw(t_game *game, int **pixels, int i, int column_h)
+{
+	int	space;
+	int r;
+
+	r = 0;
+	space = (game->rect->h - column_h) / 2;
+	while(r < column_h && (r + 1 + space) < game->rect->h)
+	{
+		(*pixels)[i*2 + (r + space) * game->rect->w] = 0xFFFFFF;
+		(*pixels)[i*2 + 1 + (r + space) * game->rect->w] = 0xFFFFFF;
+		r++;
+	}
+}
+
+void	casting(t_game *game, int **pixels, double angle, int i)
+{
+	double	t;
+	double	cx;
+	double	cy;
+	int		column_h;
+
+	t = 0.05;
+	while (t < 20.0)
+	{
+		cx = game->player->pos_x + t * cos(angle);
+		cy = game->player->pos_y + t * sin(angle);
+		if (game->level->array[(int)cx + (int)cy * game->level->size_x] != 0)
+		{
+			column_h = (int)(game->rect->h / t);
+			draw(game, pixels, i, column_h);
+			return;
+		}
+		t += 0.05;
+	}
+}
+
+void	render(t_game *game, int **pixels)
+{
+	double angle;
+	int	i;
+
+	i = 0;
+	while (i < game->rect->w/ 2)
+	{
+		angle = game->player->watch_x - (FOV / 2.0)
+			+ (FOV * i / (double)(game->rect->w / 2));
+		casting(game, pixels, angle, i);
+		i++;
+	}
+}
+
+int render_level(t_game *game)
+{
+	int			*pixels;
+	int			pitch;
+
+	SDL_LockTexture(game->texture, NULL, (void **) &pixels, &pitch);
+	render(game, &pixels);
+	SDL_UnlockTexture(game->texture);
+	SDL_RenderCopy(game->rnd, game->texture, NULL, game->rect);
 }
 
 void render_rect(t_game *game, char type, int x, int y)
@@ -57,29 +129,6 @@ void render_rect(t_game *game, char type, int x, int y)
 						   type & 0x1u, 255 * ((type & 0x2u) >> 1),
 						   255 * ((type & 0x4u) >> 2), 0xff);
 	SDL_RenderFillRect(game->rnd, &rect);
-}
-
-int render_level(t_game *game)
-{
-	int			x;
-	int			y;
-	SDL_Rect	rect;
-	int			*pixels;
-	int			pitch;
-
-	SDL_LockTexture(game->texture, &rect, (void **) &pixels, &pitch);
-	y = 0;
-	while (y < rect.h)
-	{
-		x = 0;
-		while (x < rect.w)
-		{
-			++x;
-		}
-		++y;
-	}
-	SDL_UnlockTexture(game->texture);
-	SDL_RenderCopy(game->rnd, game->texture, &rect, game->rect);
 }
 
 void render_map(t_game *game)
@@ -100,7 +149,7 @@ void render_game(t_game *game)
 	SDL_SetRenderDrawColor(game->rnd, 0, 0, 0, 0);
 	SDL_RenderClear(game->rnd);
 	render_level(game);
-	render_map(game);
+	// render_map(game);
 	SDL_RenderPresent(game->rnd);
 }
 
@@ -137,15 +186,8 @@ void event_loop(t_game *game)
 	}
 }
 
-void *func(void*arg)
-{
-	return (arg);
-}
-
 int create_window(t_game *game)
 {
-	pthread_t th;
-	pthread_create(&th, NULL, func, NULL);
 	game->rect = ft_memalloc(sizeof(SDL_Rect));
 	if (!game->rect)
 		return (MEM_ERR);
@@ -168,16 +210,29 @@ int create_window(t_game *game)
 									  WIN_SIZE_H);
 	if (!game->texture)
 		return (SDL_ERR);
+	SDL_SetRelativeMouseMode(1);
 	return (NO_ERR);
 }
 
 int destroy_window(t_game *game)
 {
+	SDL_SetRelativeMouseMode(0);
 	SDL_DestroyTexture(game->texture);
 	SDL_DestroyRenderer(game->rnd);
 	SDL_DestroyWindow(game->wnd);
 	ft_memdel((void **) &(game->rect));
 	return (0);
+}
+
+int create_payer(t_game *game)
+{
+	numeric		size;
+
+	size = game->rect->h;
+	game->player = ft_memalloc(sizeof(t_player));
+	game->player->pos_x = (game->level->startpos % game->level->size_x) * size;
+	game->player->pos_y = (game->level->startpos / game->level->size_x) * size;
+	return (NO_ERR);
 }
 
 int main(int argc, char **argv)
@@ -192,6 +247,8 @@ int main(int argc, char **argv)
 		return (0);
 	if (create_window(game) != NO_ERR)
 		return (SDL_ERR);
+	if (create_payer(game) != NO_ERR)
+		return (PLY_ERR);
 	game->state = G_MENU;
 	event_loop(game);
 	destroy_window(game);
