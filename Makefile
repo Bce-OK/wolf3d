@@ -104,3 +104,6 @@ fclean: clean clean_sdl
 	$(RM) $(RMFLAGS) $(NAME)
 
 re: fclean all
+
+test:
+	$(CC) $(CCFLAGS) -o test_$(NAME) objs/level.o test.c $(LIBFLAGS)

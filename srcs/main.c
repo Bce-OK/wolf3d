@@ -23,6 +23,7 @@
 #define TIMEOUT_MILISEC     1000
 #define FOV 				(3.14159 / 3.0)
 
+#define RAY_STEP			0.05
 
 int event_keyup(SDL_Event *event, t_game *game)
 {
@@ -47,7 +48,7 @@ int event_mouse(SDL_Event *event, t_game *game)
 	{
 		if (event->motion.xrel != 0)
 		{
-			game->player->watch_x += event->motion.xrel * 0.25;
+			game->player->watch_x += event->motion.xrel * 0.00125;
 		}
 	}
 	return (NO_ERR);
@@ -69,31 +70,35 @@ void	draw(t_game *game, int **pixels, int i, int column_h)
 	}
 }
 
-void	casting(t_game *game, int **pixels, double angle, int i)
+void	casting(t_game *game, int **pixels, numeric angle, int i)
 {
-	double	t;
-	double	cx;
-	double	cy;
+	numeric	t;
+	numeric	cx;
+	numeric	cy;
 	int		column_h;
 
-	t = 0.05;
+	t = RAY_STEP;
 	while (t < 20.0)
 	{
 		cx = game->player->pos_x + t * cos(angle);
 		cy = game->player->pos_y + t * sin(angle);
 		if (game->level->array[(int)cx + (int)cy * game->level->size_x] != 0)
 		{
-			column_h = (int)(game->rect->h / t);
+			column_h = (int)(game->rect->h / (t * cos(angle - game->player->watch_x)));
+			if (column_h > game->rect->h)
+				column_h = game->rect->h;
+			else
+				column_h = column_h;
 			draw(game, pixels, i, column_h);
 			return;
 		}
-		t += 0.05;
+		t += RAY_STEP;
 	}
 }
 
 void	render(t_game *game, int **pixels)
 {
-	double angle;
+	numeric		angle;
 	int	i;
 
 	i = 0;
@@ -112,7 +117,9 @@ int render_level(t_game *game)
 	int			pitch;
 
 	SDL_LockTexture(game->texture, NULL, (void **) &pixels, &pitch);
+	ft_bzero(pixels, sizeof(int) * game->rect->w * game->rect->h);
 	render(game, &pixels);
+	SDL_UpdateTexture(game->texture, NULL, pixels, pitch);
 	SDL_UnlockTexture(game->texture);
 	SDL_RenderCopy(game->rnd, game->texture, NULL, game->rect);
 	return (NO_ERR);
@@ -147,10 +154,10 @@ void render_map(t_game *game)
 
 void render_game(t_game *game)
 {
-	SDL_SetRenderDrawColor(game->rnd, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(game->rnd, 255, 0, 0, 255);
 	SDL_RenderClear(game->rnd);
 	render_level(game);
-	// render_map(game);
+	render_map(game);
 	SDL_RenderPresent(game->rnd);
 }
 
@@ -187,6 +194,19 @@ void event_loop(t_game *game)
 	}
 }
 
+int		create_renderer(t_game *game, int is_software)
+{
+	game->surface = SDL_GetWindowSurface(game->wnd);
+	if (is_software)
+		game->rnd = SDL_CreateSoftwareRenderer(game->surface);
+	else
+		game->rnd = SDL_CreateRenderer
+			(game->wnd, 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	if (!game->rnd)
+		return (SDL_ERR);
+	return (NO_ERR);
+}
+
 int create_window(t_game *game)
 {
 	game->rect = ft_memalloc(sizeof(SDL_Rect));
@@ -198,29 +218,17 @@ int create_window(t_game *game)
 	game->rect->h = WIN_SIZE_H;
 	game->wnd = SDL_CreateWindow(WIN_TITLE,
 								 WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
-								 SDL_WINDOW_RESIZABLE);
+								 SDL_WINDOW_OPENGL);
 	if (!game->wnd)
-	{
-		ft_putendl("wnd doesn't create");
 		return (SDL_ERR);
-	}
-	game->surface = SDL_GetWindowSurface(game->wnd);
-	game->rnd = SDL_CreateSoftwareRenderer(game->surface);
-	if (!game->rnd)
-	{
-		ft_putendl("render  doesn't create");
-		ft_putendl(SDL_GetError());
+	if (create_renderer(game, 0) != NO_ERR)
 		return (SDL_ERR);
-	}
 	game->texture = SDL_CreateTexture(game->rnd,
 									  SDL_PIXELFORMAT_RGBA8888,
 									  SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W,
 									  WIN_SIZE_H);
 	if (!game->texture)
-	{
-		ft_putendl("texture doesn't create");
 		return (SDL_ERR);
-	}
 	SDL_SetRelativeMouseMode(1);
 	return (NO_ERR);
 }
@@ -256,6 +264,8 @@ int main(int argc, char **argv)
 		game->level = load_map_from_file(argv[1]);
 	else
 		return (0);
+	if (!game->level)
+		return (MAP_ERR);
 	if (create_window(game) != NO_ERR)
 		return (SDL_ERR);
 	if (create_payer(game) != NO_ERR)

@@ -15,10 +15,10 @@
 
 # define WOLF3D_H
 # define WIN_SIZE		512
-# define WIN_SIZE_W		640
-# define WIN_SIZE_H		480
+# define WIN_SIZE_W		1024
+# define WIN_SIZE_H		720
 # define WIN_POS_X		512
-# define WIN_POS_Y		512
+# define WIN_POS_Y		100
 # define WIN_TITLE		"Wolf 3D"
 # define	FD_ERR		2
 # define	NO_ERR		0
