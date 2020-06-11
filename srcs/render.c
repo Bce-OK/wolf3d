@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 20:19:00 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/12 01:27:04 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** на i-ой вертикали (шириной в два пикселя)
 ** размером column_h
 */
-void	draw(t_game *game, int **pixels, int i, int column_h)
+void	draw(t_game *game, int i, int column_h)
 {
 	int		space;
 	int		r;
@@ -28,19 +28,19 @@ void	draw(t_game *game, int **pixels, int i, int column_h)
 	space = (game->rect->h - column_h) / 2;
 	while (r < column_h && (r + 1 + space) < game->rect->h)
 	{
-		(*pixels)[i * 2 + (r + space) * game->rect->w] =
-			get_color_by_len(255, space, game->rect->h);
-		(*pixels)[i * 2 + 1 + (r + space) * game->rect->w] =
-			get_color_by_len(255, space, game->rect->h);
+		(game->pixels)[i * 2 + (r + space) * game->rect->w] =
+			get_color_by_len(0xff0090ff, space, (int)(game->rect->h / 4));
+		(game->pixels)[i * 2 + 1 + (r + space) * game->rect->w] =
+			get_color_by_len(0xff9000ff, space, (int)(game->rect->h / 4));
 		r++;
 	}
 }
 
 /*
 ** Просчёт одной вертикали по углу game->player->watch_x + angle
-** рассчёт расстояния до стены методом итераций, по лучу
+** рассчёт расстояния до стены методом итераций по лучу
 */
-void	casting(t_game *game, int **pixels, numeric angle, int i)
+void	casting(t_game *game, numeric angle, int i)
 {
 	numeric	t;
 	numeric	cx;
@@ -48,7 +48,7 @@ void	casting(t_game *game, int **pixels, numeric angle, int i)
 	int		column_h;
 
 	t = RAY_STEP;
-	while (t < MAX_STEP)
+	while (t < END_RAY)
 	{
 		cx = game->player->pos_x + t * cos(angle);
 		cy = game->player->pos_y + t * sin(angle);
@@ -58,7 +58,7 @@ void	casting(t_game *game, int **pixels, numeric angle, int i)
 				(t * cos(angle - game->player->watch_x)));
 			if (column_h > game->rect->h)
 				column_h = game->rect->h;
-			draw(game, pixels, i, column_h);
+			draw(game, i, column_h);
 			return ;
 		}
 		t += RAY_STEP;
@@ -71,7 +71,7 @@ void	casting(t_game *game, int **pixels, numeric angle, int i)
 ** повёрнутого на угол game->player->watch_x
 ** относительно прямого направления оси х
 */
-void	render(t_game *game, int **pixels)
+void	render(t_game *game)
 {
 	numeric		angle;
 	int	i;
@@ -81,35 +81,13 @@ void	render(t_game *game, int **pixels)
 	{
 		angle = game->player->watch_x - (FOV / 2.0)
 				+ (FOV * i / (numeric)(game->rect->w / 2));
-		casting(game, pixels, angle, i);
+		casting(game, angle, i);
 		i++;
 	}
 }
 
-int		software_render(t_game *game)
-{
-	int			*pixels;
-
-	SDL_LockSurface(game->surface);
-	pixels = game->surface->pixels;
-	ft_bzero(pixels, sizeof(int) * game->rect->w * game->rect->h);
-	render(game, &pixels);
-	SDL_UnlockSurface(game->surface);
-	return (NO_ERR);
-}
-
 int		render_level(t_game *game)
 {
-	int			*pixels;
-	int			pitch;
-
-	if (game->is_software)
-		return (software_render(game));
-	SDL_LockTexture(game->texture, NULL, (void **) &pixels, &pitch);
-	ft_bzero(pixels, sizeof(int) * game->rect->w * game->rect->h);
-	render(game, &pixels);
-	SDL_UpdateTexture(game->texture, NULL, pixels, pitch);
-	SDL_UnlockTexture(game->texture);
-	SDL_RenderCopy(game->rnd, game->texture, NULL, game->rect);
+	render(game);
 	return (NO_ERR);
 }

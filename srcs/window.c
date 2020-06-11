@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:15:03 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 17:51:16 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 21:54:32 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ int		create_window(t_game *game)
 	game->rect->w = WIN_SIZE_W;
 	game->rect->h = WIN_SIZE_H;
 	game->wnd = SDL_CreateWindow(WIN_TITLE,
-								 WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
-								 SDL_WINDOW_OPENGL);
+					 WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
+					 SDL_WINDOW_OPENGL);
 	if (!game->wnd)
 		return (SDL_ERR);
-	if (create_renderer(game, 1) != NO_ERR)
+	if (create_renderer(game, SOFTWARE) != NO_ERR)
 		return (SDL_ERR);
 	game->texture = SDL_CreateTexture(game->rnd, SDL_PIXELFORMAT_RGBA8888,
 		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
@@ -59,6 +59,7 @@ int destroy_window(t_game *game)
 	SDL_SetRelativeMouseMode(0);
 	SDL_DestroyTexture(game->texture);
 	SDL_DestroyRenderer(game->rnd);
+	SDL_FreeSurface(game->surface);
 	SDL_DestroyWindow(game->wnd);
 	ft_memdel((void **) &(game->rect));
 	return (0);

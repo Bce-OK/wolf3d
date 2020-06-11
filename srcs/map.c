@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:20:21 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 20:31:41 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/12 01:27:51 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,7 @@ void			render_rect(t_game *game, char type, int x, int y)
 	rect.w = SIZE_RECT;
 	rect.h = SIZE_RECT;
 	color = get_color(type);
-	SDL_SetRenderDrawColor(game->rnd, color & 0xffu,
-						   (color & 0xff00u) >> 8u,
-						   (color & 0xff0000u) >> 16u,
-						   (color & 0xff000000u) >> 24u);
-	SDL_RenderFillRect(game->rnd, &rect);
+	fill_rect(game->pixels, game->rect, &rect, color);
 }
 
 void			render_start_end(t_game *game)
@@ -52,34 +48,25 @@ void			render_start_end(t_game *game)
 	endpos.y = (game->level->endpos / game->level->size_x) * SIZE_RECT;
 	endpos.w = SIZE_RECT;
 	endpos.h = SIZE_RECT;
-	SDL_SetRenderDrawColor(game->rnd, 0xff, 0xff, 0xff, 0xff);
-	SDL_RenderDrawRect(game->rnd, &startpos);
-	SDL_SetRenderDrawColor(game->rnd, 0x90, 0x90, 0x90, 0xff);
-	SDL_RenderFillRect(game->rnd, &endpos);
+	fill_rect(game->pixels, game->rect, &startpos, 0xa0a0a0ffu);
+	fill_rect(game->pixels, game->rect, &endpos,0x90909090u);
 }
 
 void			render_watch(t_game *game)
 {
-	int		x0;
-	int		y0;
-	int		xe;
-	int		ye;
+	SDL_Rect	r;
 
-	x0 = (int)(game->player->pos_x / game->rect->h * (SIZE_RECT / 2));
-	y0 = (int)(game->player->pos_y / game->rect->h * (SIZE_RECT / 2));
-	xe = x0 + (int)(SIZE_RECT * cos(game->player->watch_x));
-	ye = y0 + (int)(SIZE_RECT * sin(game->player->watch_x));
-	SDL_SetRenderDrawColor(game->rnd, 0xff & 0xffu,
-						   (0x70 & 0xff00u) >> 8u,
-						   (0xa0 & 0xff0000u) >> 16u,
-						   (0xff & 0xff000000u) >> 24u);
-	SDL_RenderDrawLine(game->rnd, x0, y0, xe, ye);
-	xe = x0 + (int)(SIZE_RECT * cos(game->player->watch_x - (FOV / 2.0)));
-	ye = y0 + (int)(SIZE_RECT * sin(game->player->watch_x - (FOV / 2.0)));
-	SDL_RenderDrawLine(game->rnd, x0, y0, xe, ye);
-	xe = x0 + (int)(SIZE_RECT * cos(game->player->watch_x + (FOV / 2.0)));
-	ye = y0 + (int)(SIZE_RECT * sin(game->player->watch_x + (FOV / 2.0)));
-	SDL_RenderDrawLine(game->rnd, x0, y0, xe, ye);
+	r.x = (int)(game->player->pos_x * SIZE_RECT / game->rect->h);
+	r.y = (int)(game->player->pos_y * SIZE_RECT / game->rect->h);
+	r.w = r.x + (int)(RAY_STEP * cos(game->player->watch_x));
+	r.h = r.y + (int)(RAY_STEP * sin(game->player->watch_x));
+	draw_line(game->pixels, game->rect, &r, 0xffff70ff);
+	r.w = r.x - (int)(SIZE_RECT * cos(game->player->watch_x - (FOV / 2.0)));
+	r.h = r.y - (int)(SIZE_RECT * sin(game->player->watch_x - (FOV / 2.0)));
+	draw_line(game->pixels, game->rect, &r, 0xffff70ff);
+	r.w = r.x - (int)(SIZE_RECT * cos(game->player->watch_x + (FOV / 2.0)));
+	r.h = r.y - (int)(SIZE_RECT * sin(game->player->watch_x + (FOV / 2.0)));
+	draw_line(game->pixels, game->rect, &r, 0xffff70ff);
 }
 
 void			render_map(t_game *game)

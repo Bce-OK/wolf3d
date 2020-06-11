@@ -6,39 +6,44 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 20:28:41 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 23:01:18 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include "libft.h"
-#define TIMEOUT_MILISEC     1000
 
 int event_keyup(SDL_Event *event, t_game *game)
 {
 	if (event->key.keysym.sym == SDLK_ESCAPE)
 		game->state = G_QUIT;
+	if ((event->key.keysym.sym == SDLK_w)
+		|| (event->key.keysym.sym == SDLK_s)
+		|| (event->key.keysym.sym == SDLK_d)
+		|| (event->key.keysym.sym == SDLK_a))
+		game->player->move = PM_NONE;
 	return (NO_ERR);
 }
 
 int event_keydown(SDL_Event *event, t_game *game)
 {
-	(void) event;
 	(void) game;
+	if (event->key.keysym.sym == SDLK_w)
+		game->player->move = PM_FRONT;
+	if (event->key.keysym.sym == SDLK_s)
+		game->player->move = PM_BACK;
+	if (event->key.keysym.sym == SDLK_d)
+		game->player->move = PM_RIGHT;
+	if (event->key.keysym.sym == SDLK_a)
+		game->player->move = PM_LEFT;
 	return (NO_ERR);
 }
 
 int event_mouse(SDL_Event *event, t_game *game)
 {
-	if (event && event->type == SDL_MOUSEMOTION)
-	{
-		if (event->motion.x != 0)
-		{
-			game->player->watch_x +=
-				(game->player->prev_mouse_x - event->motion.x) * 0.025;
-			game->player->prev_mouse_x = event->motion.x;
-		}
-	}
+	game->player->watch_x +=  event->motion.xrel * PLAYER_SPEED;
+		//(event->motion.x - game->player->prev_mouse_x) * PLAYER_SPEED;
+	game->player->prev_mouse_x = event->motion.x;
 	return (NO_ERR);
 }
 
