@@ -6,7 +6,7 @@
 #    By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 20:18:14 by hgreenfe          #+#    #+#              #
-#    Updated: 2020/03/15 15:49:05 by hgreenfe         ###   ########.fr        #
+#    Updated: 2020/06/11 16:27:15 by hgreenfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,13 @@ RMFLAGS = -rf
 
 #used files
 FILES := main \
-		level
+         level \
+         player \
+         game \
+         window \
+         event \
+         map \
+         render
 
 HEADERS = $(INCDIR1)/SDL2/SDL.h
 

@@ -25,4 +25,4 @@ message(VERBOSE, ${SDL_LIB})
 message(VERBOSE, ${FT_LIB})
 
 # add_executable(test_level test.c incs/wolf3d.h srcs/level.c)
-add_executable(wolf3d srcs/main.c incs/wolf3d.h srcs/level.c)
+add_executable(wolf3d srcs/main.c incs/wolf3d.h srcs/level.c srcs/player.c srcs/game.c srcs/window.c srcs/event.c srcs/map.c srcs/render.c)
