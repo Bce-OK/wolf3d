@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 18:46:45 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 20:19:00 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 #include "libft.h"
 #include <math.h>
 
+/*
+** закрашивание пикселей внутри поля зрения,
+** на i-ой вертикали (шириной в два пикселя)
+** размером column_h
+*/
 void	draw(t_game *game, int **pixels, int i, int column_h)
 {
-	int	space;
-	int r;
+	int		space;
+	int		r;
 
 	r = 0;
 	space = (game->rect->h - column_h) / 2;
-	while(r < column_h && (r + 1 + space) < game->rect->h)
+	while (r < column_h && (r + 1 + space) < game->rect->h)
 	{
 		(*pixels)[i * 2 + (r + space) * game->rect->w] =
 			get_color_by_len(255, space, game->rect->h);
@@ -31,6 +36,10 @@ void	draw(t_game *game, int **pixels, int i, int column_h)
 	}
 }
 
+/*
+** Просчёт одной вертикали по углу game->player->watch_x + angle
+** рассчёт расстояния до стены методом итераций, по лучу
+*/
 void	casting(t_game *game, int **pixels, numeric angle, int i)
 {
 	numeric	t;
@@ -39,7 +48,7 @@ void	casting(t_game *game, int **pixels, numeric angle, int i)
 	int		column_h;
 
 	t = RAY_STEP;
-	while (t < 20.0)
+	while (t < MAX_STEP)
 	{
 		cx = game->player->pos_x + t * cos(angle);
 		cy = game->player->pos_y + t * sin(angle);
@@ -50,19 +59,25 @@ void	casting(t_game *game, int **pixels, numeric angle, int i)
 			if (column_h > game->rect->h)
 				column_h = game->rect->h;
 			draw(game, pixels, i, column_h);
-			return;
+			return ;
 		}
 		t += RAY_STEP;
 	}
 }
 
+/*
+** Отрисовка основного зрения камеры (всего угла обзора)
+** из положения [game->player->pos_x, game_player_pos_y]
+** повёрнутого на угол game->player->watch_x
+** относительно прямого направления оси х
+*/
 void	render(t_game *game, int **pixels)
 {
 	numeric		angle;
 	int	i;
 
 	i = 0;
-	while (i < game->rect->w/ 2)
+	while (i < game->rect->w / 2)
 	{
 		angle = game->player->watch_x - (FOV / 2.0)
 				+ (FOV * i / (numeric)(game->rect->w / 2));

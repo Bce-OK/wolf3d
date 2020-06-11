@@ -6,7 +6,7 @@
 #    By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 20:18:14 by hgreenfe          #+#    #+#              #
-#    Updated: 2020/06/11 16:27:15 by hgreenfe         ###   ########.fr        #
+#    Updated: 2020/06/11 16:27:22 by hgreenfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,5 +111,5 @@ fclean: clean clean_sdl
 
 re: fclean all
 
-test:
-	$(CC) $(CCFLAGS) -o test_$(NAME) objs/level.o test.c $(LIBFLAGS)
+# test:
+# 	$(CC) $(CCFLAGS) -o test_$(NAME) objs/level.o test.c $(LIBFLAGS)

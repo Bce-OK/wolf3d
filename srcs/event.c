@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 16:16:25 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 20:28:41 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int event_mouse(SDL_Event *event, t_game *game)
 	{
 		if (event->motion.x != 0)
 		{
-			game->player->watch_x += event->motion.xrel * 0.00125;
+			game->player->watch_x +=
+				(game->player->prev_mouse_x - event->motion.x) * 0.025;
+			game->player->prev_mouse_x = event->motion.x;
 		}
 	}
 	return (NO_ERR);

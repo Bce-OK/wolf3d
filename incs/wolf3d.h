@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 18:41:12 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/11 20:10:03 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 # define WOLF3D_H
 
 # define	WIN_SIZE_W	1024
-# define	WIN_SIZE_H	720
+# define	WIN_SIZE_H	768
 # define	WIN_POS_X	SDL_WINDOWPOS_UNDEFINED
 # define	WIN_POS_Y	SDL_WINDOWPOS_UNDEFINED
 # define	WIN_TITLE	"Wolf 3D"
 # define 	SIZE_RECT	20
 
 # define	FOV 		(3.14159 / 3.0)
-# define	RAY_STEP	0.05
+# define	RAY_STEP	0.0125
+# define	MAX_STEP	20.0
 
 # define	FD_ERR		2
 # define	NO_ERR		0
@@ -32,6 +33,7 @@
 # define	SDL_ERR		-4
 # define	MAP_ERR		-5
 # define	PLY_ERR		-6
+
 
 typedef double		numeric;
 
