@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 10:52:13 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 12:49:37 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ typedef struct			s_ray
 {
 	double				dir_x;
 	double				dir_y;
-	double				side_dist_x;
-	double				side_dist_y;
-	double				delta_dist_x;
-	double				delta_dist_y;
+	double				dist_x;
+	double				dist_y;
+	double				delta_x;
+	double				delta_y;
 	double				perp_wall_dist;
 	int					map_x;
 	int					map_y;
@@ -117,7 +117,7 @@ int						destroy_window(t_game *game);
 void					event_loop(t_game *game);
 int						create_payer(t_game *game);
 void					render_map(t_game *game);
-int						render_level(t_game *game);
+int						render(t_game *game);
 unsigned int			get_color_by_len(unsigned int max_bright,
 	numeric length, numeric max_length);
 SDL_Rect				create_rect(int x, int y, int w, int h);

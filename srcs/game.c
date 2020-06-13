@@ -53,7 +53,7 @@ void	unlock_render(t_game *game)
 void	render_game(t_game *game)
 {
 	lock_render(game);
-	render_level(game);
+	render(game);
 	render_map(game);
 	unlock_render(game);
 }

@@ -61,12 +61,6 @@ void			render_watch(t_game *game)
 	r.w = (int)(SIZE_RECT * (game->player->pos_x + game->player->watch_x));
 	r.h = (int)(SIZE_RECT * (game->player->pos_y + game->player->watch_y));
 	draw_line(game->pixels, game->rect, &r, 0xffffffff);
-	// r.w = r.x - (int)(SIZE_RECT * (game->player->watch_x - cosf(0.33)));
-	// r.h = r.y - (int)(SIZE_RECT * (game->player->watch_y - sinf(0.33)));
-	// draw_line(game->pixels, game->rect, &r, 0xff707070);
-	// r.w = r.x - (int)(SIZE_RECT * (game->player->watch_x + cosf(0.33)));
-	// r.h = r.y - (int)(SIZE_RECT * (game->player->watch_y + sinf(0.33)));
-	// draw_line(game->pixels, game->rect, &r, 0x11111111);
 }
 
 void			render_map(t_game *game)
