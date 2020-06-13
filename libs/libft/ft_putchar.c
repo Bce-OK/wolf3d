@@ -13,11 +13,12 @@
 #ifdef OS_X
 # include <unistd.h>
 #else
-# if WIN_32
+# if __WIN32
 #  define write _write
 # else
-#  include <io.h>
+#  include <sys/unistd.h>
 # endif
+#  include <io.h>
 #endif
 
 void	ft_putchar(char c)
