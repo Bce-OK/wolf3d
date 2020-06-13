@@ -6,15 +6,14 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 10:07:09 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 12:49:22 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include "libft.h"
 #include <math.h>
 
-int event_keyup(SDL_Event *event, t_game *game)
+int		event_keyup(SDL_Event *event, t_game *game)
 {
 	if (event->key.keysym.sym == SDLK_ESCAPE)
 		game->state = G_QUIT;
@@ -26,7 +25,7 @@ int event_keyup(SDL_Event *event, t_game *game)
 	return (NO_ERR);
 }
 
-int event_keydown(SDL_Event *event, t_game *game)
+int		event_keydown(SDL_Event *event, t_game *game)
 {
 	(void) game;
 	if (event->key.keysym.sym == SDLK_w)
@@ -40,7 +39,7 @@ int event_keydown(SDL_Event *event, t_game *game)
 	return (NO_ERR);
 }
 
-int event_mouse(SDL_Event *event, t_game *game)
+int		event_mouse(SDL_Event *event, t_game *game)
 {
 	numeric		old_watch_x;
 	numeric		speed;
@@ -55,7 +54,7 @@ int event_mouse(SDL_Event *event, t_game *game)
 	return (NO_ERR);
 }
 
-void event_loop(t_game *game)
+void	event_loop(t_game *game)
 {
 	SDL_Event event;
 	int game_time;
