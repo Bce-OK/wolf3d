@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 21:55:31 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 23:02:01 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ void					destroy_menu(t_game *game);
 void					event_loop(t_game *game);
 void					render_map(t_game *game);
 int						render(t_game *game);
+void					casting(t_game *game, t_ray *ray);
+unsigned int			get_wall_color(t_ray *ray, t_game *game);
 unsigned int			get_color_by_len(unsigned int max_bright,
 	numeric length, numeric max_length);
 SDL_Rect				create_rect(int x, int y, int w, int h);

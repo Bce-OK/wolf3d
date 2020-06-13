@@ -6,14 +6,14 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 12:47:37 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 23:02:57 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <math.h>
 
-void	draw(t_game *game, int i, int column_h)
+void	draw(t_game *game, int i, int column_h, unsigned int color)
 {
 	int		space;
 	int		r;
@@ -23,7 +23,7 @@ void	draw(t_game *game, int i, int column_h)
 	while (r < column_h && (r + 1 + space) < game->rect->h)
 	{
 		(game->pixels)[i + (r + space) * game->rect->w] =
-			get_color_by_len(0xff0090ff, space,
+			get_color_by_len(color, space,
 				(int)(game->rect->h / 4));
 		r++;
 	}
@@ -75,30 +75,6 @@ void	step_check(t_game *game, t_ray *ray)
 	}
 }
 
-void	casting(t_game *game, t_ray *ray)
-{
-	while (ray->hit == 0)
-	{
-		if (ray->dist_x < ray->dist_y)
-		{
-			ray->dist_x += ray->delta_x;
-			ray->map_x += ray->step_x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->dist_y += ray->delta_y;
-			ray->map_y += ray->step_y;
-			ray->side = 1;
-		}
-		if ((ray->map_x >= game->level->size_x)
-			|| (ray->map_y >= game->level->size_y)
-			|| (game->level->array[ray->map_x +
-				ray->map_y * game->level->size_x]))
-			ray->hit = 1;
-	}
-}
-
 int		render(t_game *game)
 {
 	int		x;
@@ -121,7 +97,7 @@ int		render(t_game *game)
 			lineHeight = game->rect->h;
 		else
 			lineHeight = (int)(game->rect->h / ray.perp_wall_dist);
-		draw(game, x, lineHeight);
+		draw(game, x, lineHeight, get_wall_color(&ray, game));
 		x++;
 	}
 	return (NO_ERR);

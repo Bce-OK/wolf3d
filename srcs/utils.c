@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:27:30 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 16:37:48 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 23:05:33 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ unsigned int	get_color_by_len(unsigned int max_bright,
 		bright = get_part_by_len
 			(max_bright & 0xffu, length, max_length) |
 			get_part_by_len
-			(max_bright & 0xff00u << 8u, length, max_length) >> 8u |
+			((max_bright & 0xff00u) >> 8u, length, max_length) << 8u |
 			get_part_by_len
-			(max_bright & 0xff0000u << 16u, length, max_length) >> 16u |
+			((max_bright & 0xff0000u) >> 16u, length, max_length) << 16u |
 			get_part_by_len
-			(max_bright & 0xff000000u << 24u, length, max_length) >> 24u;
+			((max_bright & 0xff000000u) >> 24u, length, max_length) << 24u;
 	else
 		bright = 0;
 	return (bright);
