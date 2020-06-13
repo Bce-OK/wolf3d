@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:27:30 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 23:05:33 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 23:53:51 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	fill_rect(unsigned int *pixels, SDL_Rect *view,
 	int	y;
 
 	y = 0;
+	if (rect->x + rect->w > view->w || rect->x < 0
+	|| rect->y + rect->h > view->h || rect->y <0)
+		return ;
 	while (y < rect->h)
 	{
 		x = 0;
@@ -115,6 +118,9 @@ void	draw_line(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
 
 	len_x = (line->w - line->x);
 	len_y = (line->h - line->y);
+	if (line->x > view->w || line->x < 0 || line->w < 0 || line->w > view->w
+	|| line->y < 0 || line->y > view->h || line->h < 0 || line->h > view->h)
+		return ;
 	if (abs(len_y) > abs(len_x))
 		draw_line_by_y(pixels, view, line, color);
 	else

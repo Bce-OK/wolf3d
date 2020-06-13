@@ -85,6 +85,9 @@ void	print_char(t_game *game, SDL_Point p, t_font *font, char ch)
 
 	letter_in_font_row = font->array[ch] / font->cols_count;
 	letter_in_font_col = font->array[ch] % font->cols_count;
+	if (p.x + font->letter_w > game->rect->w || p.x < 0
+	|| p.y + font->letter_h > game->rect->h || p.y < 0)
+		return ;
 	i = 0;
 	while (i < font->letter_h)
 	{
