@@ -6,12 +6,13 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 23:01:18 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 10:07:09 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include "libft.h"
+#include <math.h>
 
 int event_keyup(SDL_Event *event, t_game *game)
 {
@@ -41,8 +42,15 @@ int event_keydown(SDL_Event *event, t_game *game)
 
 int event_mouse(SDL_Event *event, t_game *game)
 {
-	game->player->watch_x +=  event->motion.xrel * PLAYER_SPEED;
-		//(event->motion.x - game->player->prev_mouse_x) * PLAYER_SPEED;
+	numeric		old_watch_x;
+	numeric		speed;
+
+	old_watch_x = game->player->watch_x;
+	speed = (event->motion.x - game->player->prev_mouse_x) * PLAYER_ROTATE;
+	game->player->watch_x = game->player->watch_x * cos(speed)
+		- game->player->watch_y * sin(speed);
+	game->player->watch_y = old_watch_x * sin(speed)
+		+ game->player->watch_y * cos(speed);
 	game->player->prev_mouse_x = event->motion.x;
 	return (NO_ERR);
 }

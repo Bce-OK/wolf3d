@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:20:21 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/12 01:27:51 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 11:06:34 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ void			render_watch(t_game *game)
 {
 	SDL_Rect	r;
 
-	r.x = (int)(game->player->pos_x * SIZE_RECT / game->rect->h);
-	r.y = (int)(game->player->pos_y * SIZE_RECT / game->rect->h);
-	r.w = r.x + (int)(RAY_STEP * cos(game->player->watch_x));
-	r.h = r.y + (int)(RAY_STEP * sin(game->player->watch_x));
-	draw_line(game->pixels, game->rect, &r, 0xffff70ff);
-	r.w = r.x - (int)(SIZE_RECT * cos(game->player->watch_x - (FOV / 2.0)));
-	r.h = r.y - (int)(SIZE_RECT * sin(game->player->watch_x - (FOV / 2.0)));
-	draw_line(game->pixels, game->rect, &r, 0xffff70ff);
-	r.w = r.x - (int)(SIZE_RECT * cos(game->player->watch_x + (FOV / 2.0)));
-	r.h = r.y - (int)(SIZE_RECT * sin(game->player->watch_x + (FOV / 2.0)));
-	draw_line(game->pixels, game->rect, &r, 0xffff70ff);
+	r.x = (int)(game->player->pos_x * SIZE_RECT);
+	r.y = (int)(game->player->pos_y * SIZE_RECT);
+	r.w = (int)(SIZE_RECT * (game->player->pos_x + game->player->watch_x));
+	r.h = (int)(SIZE_RECT * (game->player->pos_y + game->player->watch_y));
+	draw_line(game->pixels, game->rect, &r, 0xffffffff);
+	// r.w = r.x - (int)(SIZE_RECT * (game->player->watch_x - cosf(0.33)));
+	// r.h = r.y - (int)(SIZE_RECT * (game->player->watch_y - sinf(0.33)));
+	// draw_line(game->pixels, game->rect, &r, 0xff707070);
+	// r.w = r.x - (int)(SIZE_RECT * (game->player->watch_x + cosf(0.33)));
+	// r.h = r.y - (int)(SIZE_RECT * (game->player->watch_y + sinf(0.33)));
+	// draw_line(game->pixels, game->rect, &r, 0x11111111);
 }
 
 void			render_map(t_game *game)

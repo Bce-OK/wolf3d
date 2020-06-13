@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:14:16 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/12 00:43:26 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/12 09:56:19 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,23 @@ void	process_game(t_game *game)
 {
 	if (game->player->move == PM_FRONT)
 	{
-		game->player->pos_x += PLAYER_SPEED * cos(game->player->watch_x);
-		game->player->pos_y += PLAYER_SPEED * sin(game->player->watch_x);
+		game->player->pos_x += PLAYER_MOVE * game->player->watch_x;
+		game->player->pos_y += PLAYER_MOVE * game->player->watch_y;
 	}
 	else if (game->player->move == PM_BACK)
 	{
-		game->player->pos_x -= PLAYER_SPEED * cos(game->player->watch_x);
-		game->player->pos_y -= PLAYER_SPEED * sin(game->player->watch_x);
+		game->player->pos_x -= PLAYER_MOVE * game->player->watch_x;
+		game->player->pos_y -= PLAYER_MOVE * game->player->watch_y;
 	}
 	if (game->player->move == PM_RIGHT)
 	{
-		game->player->pos_x += PLAYER_SPEED * sin(game->player->watch_x);
-		game->player->pos_y += PLAYER_SPEED * cos(game->player->watch_x);
+		game->player->pos_x += PLAYER_MOVE * game->player->watch_y;
+		game->player->pos_y += PLAYER_MOVE * game->player->watch_x;
 	}
 	else if (game->player->move == PM_LEFT)
 	{
-		game->player->pos_x -= PLAYER_SPEED * sin(game->player->watch_x);
-		game->player->pos_y -= PLAYER_SPEED * cos(game->player->watch_x);
+		game->player->pos_x -= PLAYER_MOVE * game->player->watch_y;
+		game->player->pos_y -= PLAYER_MOVE * game->player->watch_x;
 	}
 	game->player->move = PM_NONE;
 }

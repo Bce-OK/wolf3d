@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/12 01:26:24 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 10:52:13 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@
 # define	WIN_POS_X		SDL_WINDOWPOS_UNDEFINED
 # define	WIN_POS_Y		SDL_WINDOWPOS_UNDEFINED
 # define	WIN_TITLE		"Wolf 3D"
-# define 	SIZE_RECT		20
+# define 	SIZE_RECT		20.0
 # define	SOFTWARE		1
 
-# define	FOV 			(3.14159 / 3)
+# define	FOV 			(3.14159 / 180.0 * 66.0)
 # define	RAY_STEP		0.00125
 # define	END_RAY			10.0
-# define	PLAYER_SPEED	3.14159 / 200
+# define	PLAYER_ROTATE	3.14159 / 180
+# define	PLAYER_MOVE		0.125
 # define	TIMEOUT_MILISEC	30
 
 # define	FD_ERR			2
@@ -75,6 +76,23 @@ typedef	struct			s_map {
 	int					endpos;
 	int					version;
 }						t_map;
+
+typedef struct			s_ray
+{
+	double				dir_x;
+	double				dir_y;
+	double				side_dist_x;
+	double				side_dist_y;
+	double				delta_dist_x;
+	double				delta_dist_y;
+	double				perp_wall_dist;
+	int					map_x;
+	int					map_y;
+	int					step_x;
+	int					step_y;
+	int					hit;
+	int					side;
+}						t_ray;
 
 typedef struct			s_game {
 	SDL_Window			*wnd;
