@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 16:32:15 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 18:20:48 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 20:27:09 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		event_keyup_process(SDL_Event *event, t_game *game)
 	if (event->key.keysym.sym == SDLK_ESCAPE)
 	{
 		game->state = G_MENU;
-		SDL_SetRelativeMouseMode(0);
+		SDL_ShowCursor(1);
 	}
 	if ((event->key.keysym.sym == SDLK_w)
 		|| (event->key.keysym.sym == SDLK_s)

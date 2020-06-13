@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:13:40 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 10:25:53 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 21:53:33 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,10 @@ int	create_payer(t_game *game)
 	game->player->watch_x = 1.0;
 	game->player->watch_y = 0.0;
 	return (NO_ERR);
+}
+
+void	destroy_player(t_game *game)
+{
+	ft_bzero((game->player), sizeof(t_player));
+	ft_memdel((void**)&(game->player));
 }

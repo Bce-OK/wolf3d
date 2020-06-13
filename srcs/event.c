@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 19:26:21 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 21:25:16 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ int		event_keyup(SDL_Event *event, t_game *game)
 		return (event_keyup_process(event, game));
 	if (game->state == G_MENU)
 		return (event_keyup_menu(event, game));
+	if (event->key.keysym.sym ==SDLK_ESCAPE && game->state != G_MENU
+		&& game->state != G_QUIT)
+		game->state = G_MENU;
 	return (NO_ERR);
 }
 
@@ -50,9 +53,8 @@ void	pool_all_events(t_game *game, SDL_Event *event)
 		event_keyup(event, game);
 	if (event->type == SDL_KEYDOWN)
 		event_keydown(event, game);
-	if (event->type == SDL_MOUSEMOTION)
-		event_mouse(event, game);
-	if (event->type == SDL_MOUSEBUTTONUP)
+	if (event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONUP
+	|| event->type == SDL_MOUSEBUTTONDOWN)
 		event_mouse(event, game);
 }
 

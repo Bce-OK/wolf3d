@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:17:49 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 16:24:44 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 22:27:18 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,32 @@
 #include "libft.h"
 #include "wolf3d.h"
 
+int initialize(t_game *game)
+{
+	if (!game->level)
+		return (MAP_ERR);
+	if (create_window(game) != NO_ERR)
+		return (SDL_ERR);
+	if (create_payer(game) != NO_ERR)
+		return (PLY_ERR);
+	game->menu = create_menu(game);
+	game->state = G_MENU;
+	return (NO_ERR);
+}
+
+void finalize(t_game *game)
+{
+	destroy_player(game);
+	destroy_menu(game);
+	destroy_window(game);
+	ft_memdel((void **) &(game->level));
+	ft_memdel((void **) &game);
+}
+
 int main(int argc, char **argv)
 {
-	t_game *game;
+	t_game 	*game;
+	int		err;
 
 	SDL_Init(SDL_INIT_VIDEO);
 	game = (t_game *) ft_memalloc(sizeof(*game));
@@ -25,16 +48,10 @@ int main(int argc, char **argv)
 		game->level = load_map_from_file(argv[1]);
 	else
 		return (0);
-	if (!game->level)
-		return (MAP_ERR);
-	if (create_window(game) != NO_ERR)
-		return (SDL_ERR);
-	if (create_payer(game) != NO_ERR)
-		return (PLY_ERR);
-	game->state = G_MENU;
+	if ((err = initialize(game)) != NO_ERR)
+		return (err);
 	event_loop(game);
-	destroy_window(game);
-	ft_memdel((void **) &game);
+	finalize(game);
 	SDL_Quit();
 	return (0);
 }

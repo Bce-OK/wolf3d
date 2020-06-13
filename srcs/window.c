@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:15:03 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 19:30:12 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 20:36:02 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		create_renderer(t_game *game, int is_software)
 int		create_window(t_game *game)
 {
 	game->rect = ft_memalloc(sizeof(SDL_Rect));
+	game->mouse = ft_memalloc(sizeof(t_mouse));
 	if (!game->rect)
 		return (MEM_ERR);
 	game->rect->x = 0;
@@ -41,7 +42,7 @@ int		create_window(t_game *game)
 	game->rect->h = WIN_SIZE_H;
 	game->wnd = SDL_CreateWindow(WIN_TITLE,
 					 WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
-					 SDL_WINDOW_OPENGL);
+SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
 	if (!game->wnd)
 		return (SDL_ERR);
 	if (create_renderer(game, SOFTWARE) != NO_ERR)
@@ -50,9 +51,6 @@ int		create_window(t_game *game)
 		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
 	if (!game->texture)
 		return (SDL_ERR);
-	int showed =
-		SDL_GetRelativeMouseMode();
-	ft_putnbr(showed);
 	game->font = load_font("res/types.bmp", 8, 8);
 	set_array_font(game->font,
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!_+=~e$%()\\/{}[]<>^*\"'@");

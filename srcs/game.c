@@ -24,6 +24,7 @@ int		lock_render(t_game *game)
 		if (SDL_MUSTLOCK(game->surface))
 			err = SDL_LockSurface(game->surface);
 		game->pixels = game->surface->pixels;
+		game->pitch = game->surface->pitch;
 	}
 	else
 		err = SDL_LockTexture(game->texture,
