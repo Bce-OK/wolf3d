@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:14:16 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/12 09:56:19 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 19:28:10 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,33 +53,20 @@ void	unlock_render(t_game *game)
 void	render_game(t_game *game)
 {
 	lock_render(game);
-	render(game);
-	render_map(game);
+	if (game->state == G_PROCESS)
+		render_process_game(game);
+	if (game->state == G_MENU)
+		render_menu_game(game);
 	unlock_render(game);
 }
 
 void	process_game(t_game *game)
 {
-	if (game->player->move == PM_FRONT)
-	{
-		game->player->pos_x += PLAYER_MOVE * game->player->watch_x;
-		game->player->pos_y += PLAYER_MOVE * game->player->watch_y;
-	}
-	else if (game->player->move == PM_BACK)
-	{
-		game->player->pos_x -= PLAYER_MOVE * game->player->watch_x;
-		game->player->pos_y -= PLAYER_MOVE * game->player->watch_y;
-	}
-	if (game->player->move == PM_RIGHT)
-	{
-		game->player->pos_x += PLAYER_MOVE * game->player->watch_y;
-		game->player->pos_y += PLAYER_MOVE * game->player->watch_x;
-	}
-	else if (game->player->move == PM_LEFT)
-	{
-		game->player->pos_x -= PLAYER_MOVE * game->player->watch_y;
-		game->player->pos_y -= PLAYER_MOVE * game->player->watch_x;
-	}
-	game->player->move = PM_NONE;
+	if (game->state == G_PROCESS)
+		process_process_game(game);
+	if (game->state == G_MENU)
+		process_menu_game(game);
+	print_str(game, set_to(game->rect->w - game->font->letter_w * 3, 100),
+		game->font, ft_itoa(game->fps));
 }
 

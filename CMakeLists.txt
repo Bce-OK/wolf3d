@@ -12,7 +12,7 @@ find_library(SDL_LIB SDL2
 
 include_directories(incs)
 add_subdirectory(libs/libft)
-add_subdirectory(libs/SDL2)
+add_subdirectory(libs/SDL2/SDL2-2.0.12)
 
 link_directories(libs/SDL2/build/.libs libs/libft)
 link_libraries(SDL2 libft)
@@ -25,4 +25,4 @@ message(VERBOSE, ${SDL_LIB})
 message(VERBOSE, ${FT_LIB})
 
 # add_executable(test_level test.c incs/wolf3d.h srcs/level.c)
-add_executable(wolf3d srcs/main.c incs/wolf3d.h srcs/level.c srcs/player.c srcs/game.c srcs/window.c srcs/event.c srcs/map.c srcs/render.c srcs/utils.c)
+add_executable(wolf3d srcs/main.c incs/wolf3d.h srcs/level.c srcs/player.c srcs/game.c srcs/window.c srcs/event.c srcs/map.c srcs/render.c srcs/utils.c srcs/fonts.c srcs/process_game.c srcs/game_menu.c)

@@ -82,4 +82,6 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 void				ft_strswap(char **str1, char **str2);
 void				*ft_remalloc(void *addr, size_t old_size, size_t new_size);
+char				*ft_arrmap(char const *s, size_t size, char (*f)(char));
+void				ft_arriter(char *s, size_t size, void (*f)(char *));
 #endif

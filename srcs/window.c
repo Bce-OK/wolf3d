@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:15:03 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/11 21:54:32 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 19:30:12 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,18 @@ int		create_window(t_game *game)
 		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
 	if (!game->texture)
 		return (SDL_ERR);
-	SDL_SetRelativeMouseMode(1);
+	int showed =
+		SDL_GetRelativeMouseMode();
+	ft_putnbr(showed);
+	game->font = load_font("res/types.bmp", 8, 8);
+	set_array_font(game->font,
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!_+=~e$%()\\/{}[]<>^*\"'@");
 	return (NO_ERR);
 }
 
 int destroy_window(t_game *game)
 {
-	SDL_SetRelativeMouseMode(0);
+	free_font(game->font);
 	SDL_DestroyTexture(game->texture);
 	SDL_DestroyRenderer(game->rnd);
 	SDL_FreeSurface(game->surface);

@@ -6,7 +6,7 @@
 /*   By: hgreenfe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 19:10:07 by hgreenfe          #+#    #+#             */
-/*   Updated: 2018/11/22 20:43:07 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2018/11/27 19:18:17 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <string.h>
 
+size_t				ft_strlen(const char *str);
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);
 char				*ft_strnew(size_t size);
@@ -79,4 +80,8 @@ int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
+void				ft_strswap(char **str1, char **str2);
+void				*ft_remalloc(void *addr, size_t old_size, size_t new_size);
+char				*ft_arrmap(char const *s, size_t size, char (*f)(char));
+void				ft_arriter(char *s, size_t size, void (*f)(char *));
 #endif

@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 12:49:22 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 19:26:21 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,15 @@
 
 int		event_keyup(SDL_Event *event, t_game *game)
 {
-	if (event->key.keysym.sym == SDLK_ESCAPE)
-		game->state = G_QUIT;
-	if ((event->key.keysym.sym == SDLK_w)
-		|| (event->key.keysym.sym == SDLK_s)
-		|| (event->key.keysym.sym == SDLK_d)
-		|| (event->key.keysym.sym == SDLK_a))
-		game->player->move = PM_NONE;
+	if (game->state == G_PROCESS)
+		return (event_keyup_process(event, game));
+	if (game->state == G_MENU)
+		return (event_keyup_menu(event, game));
 	return (NO_ERR);
 }
 
 int		event_keydown(SDL_Event *event, t_game *game)
 {
-	(void) game;
 	if (event->key.keysym.sym == SDLK_w)
 		game->player->move = PM_FRONT;
 	if (event->key.keysym.sym == SDLK_s)
@@ -41,23 +37,29 @@ int		event_keydown(SDL_Event *event, t_game *game)
 
 int		event_mouse(SDL_Event *event, t_game *game)
 {
-	numeric		old_watch_x;
-	numeric		speed;
-
-	old_watch_x = game->player->watch_x;
-	speed = (event->motion.x - game->player->prev_mouse_x) * PLAYER_ROTATE;
-	game->player->watch_x = game->player->watch_x * cos(speed)
-		- game->player->watch_y * sin(speed);
-	game->player->watch_y = old_watch_x * sin(speed)
-		+ game->player->watch_y * cos(speed);
-	game->player->prev_mouse_x = event->motion.x;
+	if (game->state == G_PROCESS)
+		return (event_mouse_process(event, game));
+	if (game->state == G_MENU)
+		return (event_mouse_menu(event, game));
 	return (NO_ERR);
+}
+
+void	pool_all_events(t_game *game, SDL_Event *event)
+{
+	if (event->type == SDL_KEYUP)
+		event_keyup(event, game);
+	if (event->type == SDL_KEYDOWN)
+		event_keydown(event, game);
+	if (event->type == SDL_MOUSEMOTION)
+		event_mouse(event, game);
+	if (event->type == SDL_MOUSEBUTTONUP)
+		event_mouse(event, game);
 }
 
 void	event_loop(t_game *game)
 {
-	SDL_Event event;
-	int game_time;
+	SDL_Event	event;
+	int			game_time;
 
 	game_time = SDL_GetTicks();
 	while (game->state != G_QUIT)
@@ -66,15 +68,11 @@ void	event_loop(t_game *game)
 		{
 			if (event.type == SDL_QUIT)
 				break;
-			if (event.type == SDL_KEYUP)
-				event_keyup(&event, game);
-			if (event.type == SDL_KEYDOWN)
-				event_keydown(&event, game);
-			if (event.type == SDL_MOUSEMOTION)
-				event_mouse(&event, game);
+			pool_all_events(game, &event);
 		}
-		if (SDL_GetTicks() - game_time > TIMEOUT_MILISEC)
+		if ((SDL_GetTicks() - game_time) > TIMEOUT_MILISEC)
 		{
+			game->fps =  1000.0 / (SDL_GetTicks() - game_time);
 			game_time = SDL_GetTicks();
 			process_game(game);
 		}

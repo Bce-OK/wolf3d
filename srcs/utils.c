@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 18:27:30 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/12 01:47:55 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 16:37:48 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,12 @@ void	draw_line(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
 		draw_line_by_y(pixels, view, line, color);
 	else
 		draw_line_by_x(pixels, view, line, color);
+}
+
+SDL_Point	set_to(int x, int y)
+{
+	SDL_Point	p;
+	p.x = x;
+	p.y = y;
+	return (p);
 }
