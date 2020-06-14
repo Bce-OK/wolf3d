@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 15:41:48 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 16:14:51 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	start_ray(t_game *game, t_ray *ray, int x)
 	numeric		plane_y;
 
 	camera_x = (x << 1) / (double)game->rect->w - 1;
-	plane_x = game->player->watch_y;
-	plane_y = -game->player->watch_x;
+	plane_x = -game->player->watch_y;
+	plane_y = game->player->watch_x;
 	ray->dir_x = game->player->watch_x + plane_x * camera_x;
 	ray->dir_y = game->player->watch_y + plane_y * camera_x;
 	ray->map_x = (int)game->player->pos_x;
