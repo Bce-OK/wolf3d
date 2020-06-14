@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 22:23:39 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 12:20:24 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 
 int		event_keyup(SDL_Event *event, t_game *game)
 {
+	int		err;
+
+	err = NO_ERR;
 	if (game->state == G_PROCESS)
-		return (event_keyup_process(event, game));
-	if (game->state == G_MENU)
-		return (event_keyup_menu(event, game));
+		err = event_keyup_process(event, game);
+	else if (game->state == G_MENU)
+		err = event_keyup_menu(event, game);
+	else if (game->state == G_EDITOR)
+		err = event_keyup_editor(event, game);
 	if (event->key.keysym.sym ==SDLK_ESCAPE && game->state != G_MENU
 		&& game->state != G_QUIT)
 		game->state = G_MENU;
-	return (NO_ERR);
+	return (err);
 }
 
 int		event_keydown(SDL_Event *event, t_game *game)
@@ -40,11 +45,30 @@ int		event_keydown(SDL_Event *event, t_game *game)
 
 int		event_mouse(SDL_Event *event, t_game *game)
 {
+	int		err;
+
+	err = NO_ERR;
 	if (game->state == G_PROCESS)
-		return (event_mouse_process(event, game));
+		err = (event_mouse_process(event, game));
 	if (game->state == G_MENU)
-		return (event_mouse_menu(event, game));
-	return (NO_ERR);
+		err = (event_mouse_menu(event, game));
+	if (game->state == G_EDITOR)
+		err = (event_mouse_editor(event, game));
+	if (event->type == SDL_MOUSEMOTION)
+	{
+		game->mouse->x = event->motion.x;
+		game->mouse->y = event->motion.y;
+	}
+	else
+	{
+		game->mouse->x = event->button.x;
+		game->mouse->y = event->button.y;
+		if (event->type == SDL_MOUSEBUTTONUP)
+			game->mouse->button &= SDL_BUTTON(~event->button.button);
+		else
+			game->mouse->button |= SDL_BUTTON(event->button.button);
+	}
+	return (err);
 }
 
 void	pool_all_events(t_game *game, SDL_Event *event)

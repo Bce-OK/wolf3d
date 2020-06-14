@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 22:57:01 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 11:25:21 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 11:26:34 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void			casting(t_game *game, t_ray *ray)
 			ray->side = 1;
 		}
 		if ((ray->map_x >= game->level->size_x)
-			|| (ray->map_y >= game->level->size_y)
+			|| (ray->map_y >= game->level->size_y
+			|| (ray->map_x < 0 || ray->map_y < 0))
 			|| (game->level->array[ray->map_x +
 								   ray->map_y * game->level->size_x]))
 			ray->hit = 1;

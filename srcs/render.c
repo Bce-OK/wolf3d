@@ -6,25 +6,29 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 23:02:57 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 13:00:41 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <math.h>
 
-void	draw(t_game *game, int i, int column_h, unsigned int color)
+void	draw(t_game *game, int i, numeric dist, unsigned int color)
 {
 	int		space;
 	int		r;
+	int		line_height;
 
+	if (dist <= 1.0)
+		line_height = game->rect->h;
+	else
+		line_height = (int)(game->rect->h / dist);
 	r = 0;
-	space = (game->rect->h - column_h) / 2;
-	while (r < column_h && (r + 1 + space) < game->rect->h)
+	space = (game->rect->h - line_height) / 2;
+	while (r < line_height && (r + 1 + space) < game->rect->h)
 	{
 		(game->pixels)[i + (r + space) * game->rect->w] =
-			get_color_by_len(color, space,
-				(int)(game->rect->h / 4));
+			get_color_by_len(color, dist, MAX_DISTANCE);
 		r++;
 	}
 }
@@ -37,7 +41,7 @@ void	start_ray(t_game *game, t_ray *ray, int x)
 
 	camera_x = 2 * x / (double)game->rect->w - 1;
 	plane_x = game->player->watch_y;
-	plane_y = -game->player->watch_x;
+	plane_y = game->player->watch_x;
 	ray->dir_x = game->player->watch_x + plane_x * camera_x;
 	ray->dir_y = game->player->watch_y + plane_y * camera_x;
 	ray->map_x = (int)game->player->pos_x;
@@ -93,11 +97,7 @@ int		render(t_game *game)
 		else
 			ray.perp_wall_dist = (ray.map_y - game->player->pos_y +
 				(1 - ray.step_y) / 2) / ray.dir_y;
-		if (ray.perp_wall_dist <= 1.0)
-			lineHeight = game->rect->h;
-		else
-			lineHeight = (int)(game->rect->h / ray.perp_wall_dist);
-		draw(game, x, lineHeight, get_wall_color(&ray, game));
+		draw(game, x, ray.perp_wall_dist, get_wall_color(&ray, game));
 		x++;
 	}
 	return (NO_ERR);
