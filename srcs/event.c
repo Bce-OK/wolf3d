@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:16:00 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 21:25:16 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/13 22:23:39 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	event_loop(t_game *game)
 	game_time = SDL_GetTicks();
 	while (game->state != G_QUIT)
 	{
-		if (SDL_PollEvent(&event))
+		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
 				break;

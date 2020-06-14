@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 22:57:01 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 23:02:40 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 11:25:21 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ unsigned int	get_wall_color(t_ray *ray, t_game *game)
 		if (ray->map_y > game->player->pos_y)
 			return (0xff909090);
 		else
-			return (0x90ff9090);
+			return (0xffff9090);
 	}
 	else
 	{
 		if (ray->map_x > game->player->pos_x)
-			return (0x9090ff90);
+			return (0xff90ff90);
 		else
-			return (0x909090ff);
+			return (0xff9090ff);
 	}
 }
 
