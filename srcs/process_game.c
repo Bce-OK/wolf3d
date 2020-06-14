@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 16:32:15 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 16:34:34 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 16:35:19 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ void	process_process_game(t_game *game)
 	}
 	if (game->player->move == PM_RIGHT)
 	{
-		move_player(game, -game->fps * PLAYER_MOVE * game->player->watch_x
-			, game->fps * PLAYER_MOVE * game->player->watch_y);
+		move_player(game, -game->fps * PLAYER_MOVE * game->player->watch_y
+			, game->fps * PLAYER_MOVE * game->player->watch_x);
 	}
 	else if (game->player->move == PM_LEFT)
 	{
-		move_player(game, game->fps * PLAYER_MOVE * game->player->watch_x
-			, -game->fps * PLAYER_MOVE * game->player->watch_y);
+		move_player(game, game->fps * PLAYER_MOVE * game->player->watch_y
+			, -game->fps * PLAYER_MOVE * game->player->watch_x);
 	}
 	game->player->move = PM_NONE;
 }
