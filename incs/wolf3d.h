@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 13:01:13 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 15:07:13 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define	PLAYER_ROTATE		3.14159 / 3600
 # define	PLAYER_MOVE			0.00125
 # define	TIMEOUT_MILISEC		30
-# define	MAX_DISTANCE		5.0
+# define	MAX_DISTANCE		10.0
 
 # define	FD_ERR				2
 # define	NO_ERR				0

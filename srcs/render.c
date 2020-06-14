@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 13:00:41 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 15:41:48 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@
 void	draw(t_game *game, int i, numeric dist, unsigned int color)
 {
 	int		space;
-	int		r;
+	int		y;
 	int		line_height;
 
 	if (dist <= 1.0)
 		line_height = game->rect->h;
 	else
-		line_height = (int)(game->rect->h / dist);
-	r = 0;
-	space = (game->rect->h - line_height) / 2;
-	while (r < line_height && (r + 1 + space) < game->rect->h)
+		line_height = (int)(game->rect->h / (dist));
+	y = 0;
+	space = (game->rect->h - line_height) >> 1;
+	while (y < line_height && (y + 1 + space) < game->rect->h)
 	{
-		(game->pixels)[i + (r + space) * game->rect->w] =
+		(game->pixels)[i + (y + space) * game->rect->w] =
 			get_color_by_len(color, dist, MAX_DISTANCE);
-		r++;
+		y++;
 	}
 }
 
@@ -39,9 +39,9 @@ void	start_ray(t_game *game, t_ray *ray, int x)
 	numeric		plane_x;
 	numeric		plane_y;
 
-	camera_x = 2 * x / (double)game->rect->w - 1;
+	camera_x = (x << 1) / (double)game->rect->w - 1;
 	plane_x = game->player->watch_y;
-	plane_y = game->player->watch_x;
+	plane_y = -game->player->watch_x;
 	ray->dir_x = game->player->watch_x + plane_x * camera_x;
 	ray->dir_y = game->player->watch_y + plane_y * camera_x;
 	ray->map_x = (int)game->player->pos_x;
@@ -83,7 +83,6 @@ int		render(t_game *game)
 {
 	int		x;
 	t_ray	ray;
-	int		lineHeight;
 
 	x = 0;
 	while (x < game->rect->w)
@@ -91,12 +90,12 @@ int		render(t_game *game)
 		start_ray(game, &ray, x);
 		step_check(game, &ray);
 		casting(game, &ray);
-		if (ray.side == 0)
-			ray.perp_wall_dist = (ray.map_x - game->player->pos_x +
-				(1 - ray.step_x) / 2) / ray.dir_x;
-		else
+		if (ray.side)
 			ray.perp_wall_dist = (ray.map_y - game->player->pos_y +
-				(1 - ray.step_y) / 2) / ray.dir_y;
+								  ((1 - ray.step_y) >> 1)) / ray.dir_y;
+		else
+			ray.perp_wall_dist = (ray.map_x - game->player->pos_x +
+							  ((1 - ray.step_x) >> 1)) / ray.dir_x;
 		draw(game, x, ray.perp_wall_dist, get_wall_color(&ray, game));
 		x++;
 	}
