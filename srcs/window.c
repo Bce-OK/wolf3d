@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:15:03 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 20:36:02 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 21:47:09 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
 		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
 	if (!game->texture)
 		return (SDL_ERR);
-	game->font = load_font("res/types.bmp", 8, 8);
+	game->font = load_font("res/types.bmp", 5, 13);
 	set_array_font(game->font,
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!_+=~e$%()\\/{}[]<>^*\"'@");
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!_+=~e$%()\\/{}[]<>^*\"'");
 	return (NO_ERR);
 }
 

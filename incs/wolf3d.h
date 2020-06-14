@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 16:16:30 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 16:34:34 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct				s_font
 	int						cols_count;
 	char					*array;
 	unsigned int			*pixels;
+	int						pitch;
 	unsigned int			transparent_color;
 }							t_font;
 

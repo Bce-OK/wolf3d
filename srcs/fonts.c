@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 15:01:26 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 18:33:56 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 21:54:13 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_font	*load_font(char* filename, int rows_count, int cols_count)
 	font->cols_count = cols_count;
 	font->letter_w = font->full_w / cols_count;
 	font->letter_h = font->full_h / rows_count;
+	font->pitch = bmp->pitch;
 	font->transparent_color = (unsigned int)(((unsigned int*)bmp->pixels)[0]);
 	font->pixels = ft_memalloc(bmp->pitch * bmp->h);
 	font->pixels = ft_memcpy(font->pixels, bmp->pixels, bmp->pitch * bmp->h);
