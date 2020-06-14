@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 16:32:15 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 15:49:55 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 16:34:34 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,23 @@ void	process_process_game(t_game *game)
 {
 	if (game->player->move == PM_FRONT)
 	{
-		game->player->pos_x += game->fps * PLAYER_MOVE * game->player->watch_x;
-		game->player->pos_y += game->fps * PLAYER_MOVE * game->player->watch_y;
+		move_player(game, game->fps * PLAYER_MOVE * game->player->watch_x
+			, game->fps * PLAYER_MOVE * game->player->watch_y);
 	}
 	else if (game->player->move == PM_BACK)
 	{
-		game->player->pos_x -= game->fps * PLAYER_MOVE * game->player->watch_x;
-		game->player->pos_y -= game->fps * PLAYER_MOVE * game->player->watch_y;
+		move_player(game, -game->fps * PLAYER_MOVE * game->player->watch_x
+			, -game->fps * PLAYER_MOVE * game->player->watch_y);
 	}
 	if (game->player->move == PM_RIGHT)
 	{
-		game->player->pos_x -= game->fps * PLAYER_MOVE * game->player->watch_y;
-		game->player->pos_y += game->fps * PLAYER_MOVE * game->player->watch_x;
+		move_player(game, -game->fps * PLAYER_MOVE * game->player->watch_x
+			, game->fps * PLAYER_MOVE * game->player->watch_y);
 	}
 	else if (game->player->move == PM_LEFT)
 	{
-		game->player->pos_x += game->fps * PLAYER_MOVE * game->player->watch_y;
-		game->player->pos_y -= game->fps * PLAYER_MOVE * game->player->watch_x;
+		move_player(game, game->fps * PLAYER_MOVE * game->player->watch_x
+			, -game->fps * PLAYER_MOVE * game->player->watch_y);
 	}
 	game->player->move = PM_NONE;
 }
