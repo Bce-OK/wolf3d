@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 23:02:01 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/14 11:18:57 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define	FOV 			(3.14159 / 180.0 * 66.0)
 # define	RAY_STEP		0.00125
 # define	END_RAY			10.0
-# define	PLAYER_ROTATE	3.14159 / 180
-# define	PLAYER_MOVE		0.0125
+# define	PLAYER_ROTATE	3.14159 / 3600
+# define	PLAYER_MOVE		0.00125
 # define	TIMEOUT_MILISEC	30
 
 # define	FD_ERR			2
