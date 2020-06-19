@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:17:49 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/13 22:27:18 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/19 00:55:03 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int initialize(t_game *game)
 		return (SDL_ERR);
 	if (create_payer(game) != NO_ERR)
 		return (PLY_ERR);
+	load_walls_texture(game, "res/wolftextures.bmp", 8);
 	game->menu = create_menu(game);
 	game->state = G_MENU;
 	return (NO_ERR);
@@ -30,8 +31,9 @@ int initialize(t_game *game)
 
 void finalize(t_game *game)
 {
-	destroy_player(game);
 	destroy_menu(game);
+	free_walls_texture(game);
+	destroy_player(game);
 	destroy_window(game);
 	ft_memdel((void **) &(game->level));
 	ft_memdel((void **) &game);

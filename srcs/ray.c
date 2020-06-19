@@ -6,28 +6,22 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 22:57:01 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 21:06:33 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:26:19 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-unsigned int	get_wall_color(t_ray *ray, t_game *game)
+unsigned int	get_wall_color(t_ray *ray, t_game *game, int y, int height)
 {
-	if (ray->side)
-	{
-		if (ray->map_y > game->player->pos_y)
-			return (0xff909090);
-		else
-			return (0xffff9090);
-	}
-	else
-	{
-		if (ray->map_x > game->player->pos_x)
-			return (0xff90ff90);
-		else
-			return (0xff9090ff);
-	}
+	int				type;
+	unsigned int	color;
+
+	type = get_wall_type(ray, game);
+	ray->wall_x -= (int)ray->wall_x;
+	game->walls->num = type;
+	color = get_texture_pixel(game->walls, ray->wall_x, y, height);
+	return (color);
 }
 
 

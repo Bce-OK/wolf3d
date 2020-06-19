@@ -6,7 +6,7 @@
 #    By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/27 20:18:14 by hgreenfe          #+#    #+#              #
-#    Updated: 2020/06/11 16:27:22 by hgreenfe         ###   ########.fr        #
+#    Updated: 2020/06/17 08:45:49 by hgreenfe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,8 @@ else
 	CD := $(shell pwd)
 endif
 
-PATH_SDL := $(addsuffix /libs, $(CD))
-SDL :=  $(PATH_SDL)/SDL2/build/.libs
+PATH_SDL := $(addsuffix /libs/SDL2/SDL2-2.0.12, $(CD))
+SDL :=  $(PATH_SDL)/build/.libs
 
 # used applications
 CC = gcc

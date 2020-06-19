@@ -6,27 +6,29 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 16:14:51 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/19 21:58:35 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <math.h>
 
-void	draw(t_game *game, int i, numeric dist, unsigned int color)
+void	draw(t_game *game, int i, numeric dist, t_ray *ray)
 {
-	int		space;
-	int		y;
-	int		line_height;
+	int				space;
+	int				y;
+	int				line_height;
+	unsigned int	color;
 
 	if (dist <= 1.0)
 		line_height = game->rect->h;
 	else
 		line_height = (int)(game->rect->h / (dist));
 	y = 0;
-	space = (game->rect->h - line_height) >> 1;
+	space = (game->rect->h - line_height) / 2;
 	while (y < line_height && (y + 1 + space) < game->rect->h)
 	{
+		color = get_wall_color(ray, game, y, line_height);
 		(game->pixels)[i + (y + space) * game->rect->w] =
 			get_color_by_len(color, dist, MAX_DISTANCE);
 		y++;
@@ -96,7 +98,7 @@ int		render(t_game *game)
 		else
 			ray.perp_wall_dist = (ray.map_x - game->player->pos_x +
 							  ((1 - ray.step_x) >> 1)) / ray.dir_x;
-		draw(game, x, ray.perp_wall_dist, get_wall_color(&ray, game));
+		draw(game, x, ray.perp_wall_dist, &ray);
 		x++;
 	}
 	return (NO_ERR);

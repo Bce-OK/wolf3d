@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:31 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/14 16:34:34 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/19 23:26:25 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct				s_ray
 	int						step_y;
 	int						hit;
 	int						side;
+	numeric					wall_x;
 }							t_ray;
 
 typedef struct				s_mouse
@@ -121,6 +122,16 @@ typedef struct				s_mouse
 	int 					y;
 	int 					button;
 }							t_mouse;
+
+typedef struct				s_texture
+{
+	SDL_Rect				*rect;
+	int						width;
+	int 					height;
+	unsigned char			*pixels;
+	int						bpp;
+	int						num;
+}							t_texture;
 
 typedef struct				s_game
 {
@@ -134,6 +145,7 @@ typedef struct				s_game
 	t_game_state			state;
 	t_player				*player;
 	t_map					*level;
+	t_texture				*walls;
 	int						is_software;
 	numeric					fps;
 	t_font					*font;
@@ -156,7 +168,10 @@ int							create_renderer(t_game *game, int is_software);
 int							create_window(t_game *game);
 t_menu_button				*create_menu(t_game *game);
 int							create_payer(t_game *game);
+void						load_walls_texture(t_game *game, char *filename
+	, int count);
 
+void						free_walls_texture(t_game *game);
 void						destroy_player(t_game *game);
 void						destroy_menu(t_game *game);
 int							destroy_window(t_game *game);
@@ -167,9 +182,13 @@ int							render(t_game *game);
 void						casting(t_game *game, t_ray *ray);
 void						move_player(t_game *game,
 	numeric speed_x, numeric speed_y);
-unsigned int				get_wall_color(t_ray *ray, t_game *game);
+unsigned int				get_wall_color(t_ray *ray, t_game *game,
+	int y, int height);
+int							get_wall_type(t_ray *ray, t_game *game);
 unsigned int				get_color_by_len(unsigned int max_bright,
 	numeric length, numeric max_length);
+unsigned int				get_texture_pixel(t_texture *tex, numeric x,
+	int y, int height);
 SDL_Rect					create_rect(int x, int y, int w, int h);
 void						fill_rect(unsigned int *pixels, SDL_Rect *view,
 	SDL_Rect *rect, unsigned int color);
