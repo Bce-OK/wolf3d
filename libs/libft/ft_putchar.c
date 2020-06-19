@@ -17,8 +17,8 @@
 #  define write _write
 # else
 #  include <sys/unistd.h>
+//#  include <io.h>
 # endif
-#  include <io.h>
 #endif
 
 void	ft_putchar(char c)

@@ -55,7 +55,9 @@ int		event_keyup_menu(SDL_Event *event, t_game *game)
 		game->state = G_PROCESS;
 		SDL_ShowCursor(1);
 	}
+	return (NO_ERR);
 }
+
 int		event_mouse_menu(SDL_Event *event, t_game *game)
 {
 	SDL_Point	cursor;
@@ -74,6 +76,7 @@ int		event_mouse_menu(SDL_Event *event, t_game *game)
 			++i;
 		}
 	}
+	return (NO_ERR);
 }
 
 int		render_menu_game(t_game *game)

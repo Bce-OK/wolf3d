@@ -20,9 +20,9 @@ SRCDIR = srcs
 OBJDIR = objs
 
 LIBUIDIR = .
-LIBDIR = libs/libft
+LIBDIR = ./libs/libft
 
-INCDIR1 = incs
+INCDIR1 = ./incs
 INCSDL = ./SDL/include
 
 # PATH_SDL := $(addsuffix /libs, $(shell pwd))
@@ -38,21 +38,28 @@ SDL :=  $(PATH_SDL)/build/.libs
 
 # used applications
 CC = gcc
-CCFLAGS = -Ofast -Wall -Wextra -Werror -pedantic-errors -I $(LIBDIR) -I $(INCDIR1) -I $(INCSDL) -g
+CCFLAGS = -Ofast -Wall -Wextra -Werror -pedantic-errors -g
 AR = ar
 ARFLAGS = -rs
 RM = rm
 RMFLAGS = -rf
-
+INCFLAGS = -I$(LIBDIR) -I$(INCDIR1) -I$(INCSDL) 
 #used files
-FILES := main \
-         level \
-         player \
-         game \
-         window \
-         event \
-         map \
-         render
+FILES := editor \
+	event \
+	fonts \
+	game \
+	game_menu \
+	level \
+	main \
+	map \
+	player \
+	process_game \
+	ray \
+	render \
+	texture \
+	utils \
+	window
 
 HEADERS = $(INCDIR1)/SDL2/SDL.h
 
@@ -84,18 +91,18 @@ libs:
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCDIR1)
 	@echo "test" $@ "" $(<) ""
-	$(CC) $(CCFLAGS) -c -o $@ $<
+	$(CC) $(CCFLAGS) $(INCFLAGS) -c -o $@ $<
 
 $(SDL):
-	cd $(PATH_SDL)/SDL2; ./configure --prefix=$(PATH_SDL); make;
-	make -sC $(PATH_SDL)/SDL2 install
+	cd $(PATH_SDL); ./configure --prefix=$(PATH_SDL)/..; make;
+	make -sC $(PATH_SDL) install
 
 $(LIBDIR):
 	make -sC $(LIBDIR)
 
 $(NAME):libs $(OBJDIR) $(SDL) $(LIBDIR) $(FULL_OBJS)
-	@echo $(CC) $(CCFLAGS) -o $(NAME) $(FULL_OBJS) $(LIBFLAGS)
-	$(CC) $(CCFLAGS) -o $(NAME) $(FULL_OBJS) $(LIBFLAGS)
+	@echo $(CC) $(CCFLAGS) $(INCFLAGS) -o $(NAME) $(FULL_OBJS) $(LIBFLAGS)
+	$(CC) $(CCFLAGS) $(INCFLAGS) -o $(NAME) $(FULL_OBJS) $(LIBFLAGS)
 
 clean:
 	make -C $(LIBDIR) clean

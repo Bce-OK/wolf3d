@@ -24,7 +24,7 @@ int		set_array_font(t_font *font, char *array)
 	ft_memset(font->array, 0xff, MAX_LETTERS_COUNT);
 	while (i < font->rows_count * font->cols_count)
 	{
-		font->array[array[i]] = (char)i;
+		font->array[(int)array[i]] = (char)i;
 		++i;
 	}
 	return (NO_ERR);
@@ -32,7 +32,7 @@ int		set_array_font(t_font *font, char *array)
 
 void	set_transparent(t_font *font)
 {
-	size_t	i;
+	int		i;
 
 	i = 0;
 	while (i < font->full_h * font->full_w)
@@ -84,8 +84,8 @@ void	print_char(t_game *game, SDL_Point p, t_font *font, char ch)
 	int				j;
 	unsigned int	color;
 
-	letter_in_font_row = font->array[ch] / font->cols_count;
-	letter_in_font_col = font->array[ch] % font->cols_count;
+	letter_in_font_row = font->array[(int)ch] / font->cols_count;
+	letter_in_font_col = font->array[(int)ch] % font->cols_count;
 	if (p.x + font->letter_w > game->rect->w || p.x < 0
 	|| p.y + font->letter_h > game->rect->h || p.y < 0)
 		return ;

@@ -15,8 +15,10 @@
 #else
 # if WIN_32
 #  define write _write
+#  include <io.h>
+# else
+#  include <sys/unistd.h>
 # endif
-# include <io.h>
 #endif
 
 void	ft_putchar_fd(char c, int fd)
