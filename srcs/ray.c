@@ -6,13 +6,13 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 22:57:01 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/19 23:26:19 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/20 01:22:45 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-unsigned int	get_wall_color(t_ray *ray, t_game *game, int y, int height)
+unsigned int	get_wall_color(t_ray *ray, t_game *game, numeric y, numeric height)
 {
 	int				type;
 	unsigned int	color;

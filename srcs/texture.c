@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 21:16:18 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/19 23:39:40 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/22 01:28:59 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,37 @@ int				get_wall_type(t_ray *ray, t_game *game)
 	{
 		ray->wall_x = game->player->pos_x + ray->perp_wall_dist * ray->dir_x;
 		if (ray->map_y > game->player->pos_y)
-			return (0);
+			return (6);
 		else
-			return (1);
+			return (0);
 	}
 	else
 	{
 		ray->wall_x = game->player->pos_y + ray->perp_wall_dist * ray->dir_y;
 		if (ray->map_x > game->player->pos_x)
-			return (2);
+			return (1);
 		else
-			return (3);
+			return (7);
 	}
 }
 
 
-unsigned int	get_texture_pixel(t_texture *tex, numeric x, int y, int height)
+unsigned int	get_texture_pixel(t_texture *tex, numeric x,
+	numeric y, numeric height)
 {
 	unsigned int	color;
 
 	if (!tex)
 		return (0x00000000);
-	x = (int)(x * (numeric)tex->rect->w * 4.0);
-	x = (int)x % tex->rect->w;
+	x = (x * TEX_REPEAT_COUNT * (numeric)tex->rect->w);
+	x = ((int)x % (tex->rect->w));
 	x += tex->rect->w * tex->num;
-	y = (int)((numeric)y * (numeric)tex->rect->h / (numeric)height) * 4 % tex->rect->h;
+	y = ((int)((numeric)y * TEX_REPEAT_COUNT * (numeric)tex->rect->h /
+		(numeric)height) % (tex->rect->h));
 	color = 0xff000000u |
-		tex->pixels[tex->bpp * ((int)x + y * tex->width)]|
-		tex->pixels[tex->bpp * ((int)x + y * tex->width) + 1] << 8u |
-		tex->pixels[tex->bpp * ((int)x + y * tex->width) + 2] << 16u;
+		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width)]|
+		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width) + 1] << 8u |
+		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width) + 2] << 16u;
 	return (color);
 }
 

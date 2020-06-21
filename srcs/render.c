@@ -6,7 +6,7 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/11 16:23:33 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/19 21:58:35 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/22 00:37:11 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	draw(t_game *game, int i, numeric dist, t_ray *ray)
 	space = (game->rect->h - line_height) / 2;
 	while (y < line_height && (y + 1 + space) < game->rect->h)
 	{
-		color = get_wall_color(ray, game, y, line_height);
+		color = get_wall_color(ray, game,
+			y + ((game->rect->h / (dist)) - line_height) / 2,
+			(game->rect->h / (dist)));
 		(game->pixels)[i + (y + space) * game->rect->w] =
 			get_color_by_len(color, dist, MAX_DISTANCE);
 		y++;
