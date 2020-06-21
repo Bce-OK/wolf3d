@@ -6,11 +6,10 @@
 /*   By: hgreenfe <hgreenfe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 21:16:18 by hgreenfe          #+#    #+#             */
-/*   Updated: 2020/06/22 01:28:59 by hgreenfe         ###   ########.fr       */
+/*   Updated: 2020/06/22 01:29:39 by hgreenfe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <zconf.h>
 #include "wolf3d.h"
 #include "libft.h"
 
