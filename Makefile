@@ -43,7 +43,7 @@ AR = ar
 ARFLAGS = -rs
 RM = rm
 RMFLAGS = -rf
-INCFLAGS = -I$(LIBDIR) -I$(INCDIR1) -I$(INCSDL) 
+INCFLAGS = -I$(LIBDIR) -I$(INCDIR1) -I$(INCSDL)
 #used files
 FILES := editor \
 	event \
