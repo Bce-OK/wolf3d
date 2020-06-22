@@ -53,6 +53,8 @@ void	unlock_render(t_game *game)
 
 void	render_game(t_game *game)
 {
+	SDL_Point	point;
+
 	lock_render(game);
 	if (game->state == G_PROCESS || game->state == G_PAUSE)
 		render_process_game(game);
@@ -60,6 +62,12 @@ void	render_game(t_game *game)
 		render_menu_game(game);
 	if (game->state == G_EDITOR)
 		render_editor_game(game);
+	point.x = game->rect->w - game->font->letter_w * 10;
+	point.y = game->font->letter_h;
+	print_str(game, point, game->font, "FPS:");
+	point.x = game->rect->w - game->font->letter_w * 5;
+	point.y = game->font->letter_h;
+	print_str(game, point, game->font, ft_itoa((int)game->fps));
 	unlock_render(game);
 }
 
