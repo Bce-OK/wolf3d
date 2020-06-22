@@ -19,28 +19,25 @@ int				get_wall_type(t_ray *ray, t_game *game)
 	{
 		ray->wall_x = game->player->pos_x + ray->perp_wall_dist * ray->dir_x;
 		if (ray->map_y > game->player->pos_y)
-			return (6);
+			return (NORTH_WALL);
 		else
-			return (0);
+			return (SOUTH_WALL);
 	}
 	else
 	{
 		ray->wall_x = game->player->pos_y + ray->perp_wall_dist * ray->dir_y;
 		if (ray->map_x > game->player->pos_x)
-			return (1);
+			return (EAST_WALL);
 		else
-			return (7);
+			return (WEST_WALL);
 	}
 }
-
 
 unsigned int	get_texture_pixel(t_texture *tex, numeric x,
 	numeric y, numeric height)
 {
 	unsigned int	color;
 
-	if (!tex)
-		return (0x00000000);
 	x = (x * TEX_REPEAT_COUNT * (numeric)tex->rect->w);
 	x = ((int)x % (tex->rect->w));
 	x += tex->rect->w * tex->num;
@@ -71,6 +68,7 @@ void			load_walls_texture(t_game *game, char *filename, int count)
 	texture->rect->x = 0;
 	texture->rect->y = 0;
 	texture->num = count;
+	texture->enabled = 1;
 	SDL_FreeSurface(surface);
 	game->walls = texture;
 }

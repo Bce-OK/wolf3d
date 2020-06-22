@@ -12,12 +12,25 @@
 
 #include "wolf3d.h"
 
+unsigned int	get_color_by_type(int wall_type)
+{
+	if (wall_type == WEST_WALL)
+		return (0xffff0000u);
+	else if (wall_type == EAST_WALL)
+		return (0xff00ff00u);
+	else if (wall_type == NORTH_WALL)
+		return (0xff0000ffu);
+	else
+		return (0xffffffffu);
+}
 unsigned int	get_wall_color(t_ray *ray, t_game *game, numeric y, numeric height)
 {
 	int				type;
 	unsigned int	color;
 
 	type = get_wall_type(ray, game);
+	if (!game->walls || !game->walls->enabled)
+		return (get_color_by_type(type));
 	ray->wall_x -= (int)ray->wall_x;
 	game->walls->num = type;
 	color = get_texture_pixel(game->walls, ray->wall_x, y, height);
