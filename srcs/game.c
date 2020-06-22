@@ -29,9 +29,12 @@ int		lock_render(t_game *game)
 	else
 		err = SDL_LockTexture(game->texture,
 			NULL, (void**)&game->pixels, &game->pitch);
-	if (!err)
-		ft_bzero(game->pixels,
-		sizeof(int) * game->rect->w * game->rect->h);
+    if ((SDL_LockMutex(game->mutex) == 0) && (!err))
+	{
+        ft_bzero(game->pixels,
+                 sizeof(int) * game->rect->w * game->rect->h);
+        SDL_UnlockMutex(game->mutex);
+    }
 	return (err);
 }
 

@@ -38,6 +38,7 @@
 # define	PLY_ERR				-6
 
 # define	TEX_REPEAT_COUNT	8
+
 typedef double				numeric;
 
 typedef enum				e_game_state

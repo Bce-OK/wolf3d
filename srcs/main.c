@@ -40,19 +40,22 @@ void finalize(t_game *game)
 }
 
 int thread_init(t_game *game) {
-    int         status;
-    SDL_Thread  *render_thread;
-    SDL_Thread  *event_thread;
+	int			status;
+	SDL_Thread	*render_thread;
 
-    event_thread = SDL_CreateThread(render_loop, "render_loop", game);
-    event_loop(game);
-    SDL_DetachThread(render_thread);
-    return (status);
+	game->mutex = SDL_CreateMutex();
+	if (!game->mutex)
+		return (NO_ERR);
+	render_thread = SDL_CreateThread(render_loop, "render_loop", game);
+	event_loop(game);
+	SDL_WaitThread(render_thread, &status);
+	SDL_DestroyMutex(game->mutex);
+	return (status);
 }
 
 int main(int argc, char **argv)
 {
-	t_game 	*game;
+	t_game	*game;
 	int		err;
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -63,8 +66,8 @@ int main(int argc, char **argv)
 		return (0);
 	if ((err = initialize(game)) != NO_ERR)
 		return (err);
-    thread_init(game);
-    finalize(game);
+	thread_init(game);
+	finalize(game);
 	SDL_Quit();
 	return (0);
 }
