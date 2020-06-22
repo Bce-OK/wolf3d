@@ -177,7 +177,8 @@ void						destroy_player(t_game *game);
 void						destroy_menu(t_game *game);
 int							destroy_window(t_game *game);
 
-void						event_loop(t_game *game);
+int 						event_loop(void *game);
+int 						render_loop(void *game);
 void						render_map(t_game *game);
 int							render(t_game *game);
 void						casting(t_game *game, t_ray *ray);

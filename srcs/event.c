@@ -82,13 +82,23 @@ void	pool_all_events(t_game *game, SDL_Event *event)
 		event_mouse(event, game);
 }
 
-void	event_loop(t_game *game)
+int     render_loop(void *game)
+{
+    while (((t_game*)game)->state != G_QUIT)
+    {
+        render_game((t_game *) game);
+        SDL_Delay(1);
+    }
+    return (NO_ERR);
+}
+
+int 	event_loop(void *game)
 {
 	SDL_Event	event;
 	int			game_time;
 
 	game_time = SDL_GetTicks();
-	while (game->state != G_QUIT)
+	while (((t_game*)game)->state != G_QUIT)
 	{
 		while (SDL_PollEvent(&event))
 		{
@@ -98,10 +108,11 @@ void	event_loop(t_game *game)
 		}
 		if ((SDL_GetTicks() - game_time) > TIMEOUT_MILISEC)
 		{
-			game->fps =  1000.0 / (SDL_GetTicks() - game_time);
+            ((t_game*)game)->fps =  1000.0 / (SDL_GetTicks() - game_time);
 			game_time = SDL_GetTicks();
 			process_game(game);
 		}
-		render_game(game);
+        SDL_Delay(1);
 	}
+	return (NO_ERR);
 }

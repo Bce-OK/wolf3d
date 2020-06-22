@@ -39,6 +39,17 @@ void finalize(t_game *game)
 	ft_memdel((void **) &game);
 }
 
+int thread_init(t_game *game) {
+    int         status;
+    SDL_Thread  *render_thread;
+    SDL_Thread  *event_thread;
+
+    event_thread = SDL_CreateThread(render_loop, "render_loop", game);
+    event_loop(game);
+    SDL_DetachThread(render_thread);
+    return (status);
+}
+
 int main(int argc, char **argv)
 {
 	t_game 	*game;
@@ -52,8 +63,8 @@ int main(int argc, char **argv)
 		return (0);
 	if ((err = initialize(game)) != NO_ERR)
 		return (err);
-	event_loop(game);
-	finalize(game);
+    thread_init(game);
+    finalize(game);
 	SDL_Quit();
 	return (0);
 }
