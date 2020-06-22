@@ -74,7 +74,5 @@ void	process_game(t_game *game)
 		process_menu_game(game);
 	if (game->state == G_EDITOR)
 		process_editor_game(game);
-	print_str(game, set_to(game->rect->w - game->font->letter_w * 3, 100),
-		game->font, ft_itoa(game->fps));
 }
 
