@@ -152,6 +152,7 @@ typedef struct				s_game
 	t_font					*font;
 	t_mouse					*mouse;
 	t_menu_button			*menu;
+	SDL_mutex				*mutex;
 }							t_game;
 
 t_map						*load_map_from_file(char const *filename);
