@@ -38,6 +38,10 @@
 # define	PLY_ERR				-6
 
 # define	TEX_REPEAT_COUNT	8
+# define	NORTH_WALL			6
+# define	SOUTH_WALL			0
+# define	EAST_WALL			1
+# define	WEST_WALL			7
 
 typedef double				numeric;
 
@@ -133,6 +137,7 @@ typedef struct				s_texture
 	unsigned char			*pixels;
 	int						bpp;
 	int						num;
+	int						enabled;
 }							t_texture;
 
 typedef struct				s_game
