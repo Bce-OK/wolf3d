@@ -66,7 +66,6 @@ void			render_watch(t_game *game)
 void			render_map(t_game *game)
 {
 	int			i;
-	SDL_Point	point;
 
 	i = 0;
 	while (i < game->level->size_x * game->level->size_y)
@@ -77,10 +76,4 @@ void			render_map(t_game *game)
 	}
 	render_start_end(game);
 	render_watch(game);
-	point.x = game->rect->w - game->font->letter_w * 10;
-	point.y = game->font->letter_h;
-	print_str(game, point, game->font, "FPS:");
-	point.x = game->rect->w - game->font->letter_w * 5;
-	point.y = game->font->letter_h;
-	print_str(game, point, game->font, ft_itoa((int)game->fps));
 }
