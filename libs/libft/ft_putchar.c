@@ -14,10 +14,10 @@
 # include <unistd.h>
 #else
 # if __WIN32
-#  define write _write
+//#  define write _write
+#  include <io.h>
 # else
 #  include <sys/unistd.h>
-//#  include <io.h>
 # endif
 #endif
 
