@@ -47,7 +47,7 @@ SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
 		return (SDL_ERR);
 	if (create_renderer(game, SOFTWARE) != NO_ERR)
 		return (SDL_ERR);
-	game->texture = SDL_CreateTexture(game->rnd, SDL_PIXELFORMAT_RGBA8888,
+	game->texture = SDL_CreateTexture(game->rnd, SDL_PIXELFORMAT_ARGB8888,
 		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
 	if (!game->texture)
 		return (SDL_ERR);

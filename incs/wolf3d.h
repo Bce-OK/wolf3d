@@ -21,7 +21,7 @@
 # define	WIN_TITLE			"Wolf 3D"
 # define 	SIZE_RECT			20.0
 # define 	EDITOR_SIZE_RECT	50
-# define	SOFTWARE			1
+# define	SOFTWARE			0
 
 # define	PLAYER_ROTATE		3.14159 / 3600
 # define	PLAYER_MOVE			0.00125
