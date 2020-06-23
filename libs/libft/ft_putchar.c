@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef OS_X
+#ifdef __APPLE__
 # include <unistd.h>
 #else
 # if __WIN32
-//#  define write _write
 #  include <io.h>
 # else
 #  include <sys/unistd.h>

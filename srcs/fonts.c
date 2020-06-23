@@ -68,6 +68,8 @@ t_font	*load_font(char* filename, int rows_count, int cols_count)
 
 void	free_font(t_font *pfont)
 {
+	if (!pfont)
+		return ;
 	ft_bzero(pfont->pixels,
 		sizeof(unsigned int) * pfont->full_w * pfont->full_h);
 	ft_memdel((void**)&(pfont->pixels));

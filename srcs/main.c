@@ -20,7 +20,10 @@ int initialize(t_game *game)
 	if (!game->level)
 		return (MAP_ERR);
 	if (create_window(game) != NO_ERR)
-		return (SDL_ERR);
+	{
+		printf("%s\n", SDL_GetError());
+        return (SDL_ERR);
+    }
 	if (create_payer(game) != NO_ERR)
 		return (PLY_ERR);
 	load_walls_texture(game, "res/wolftextures.bmp", 8);
