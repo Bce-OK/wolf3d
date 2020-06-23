@@ -27,6 +27,10 @@ int		create_renderer(t_game *game, int is_software)
 			SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!game->rnd)
 		return (SDL_ERR);
+	game->texture = SDL_CreateTexture(game->rnd, SDL_PIXELFORMAT_ARGB8888,
+		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
+	if (!game->texture)
+		return (SDL_ERR);
 	return (NO_ERR);
 }
 
@@ -43,15 +47,11 @@ int		create_window(t_game *game)
 	game->wnd = SDL_CreateWindow(WIN_TITLE,
 					 WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
 SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
-	if (!game->wnd)
-		return (SDL_ERR);
-	if (create_renderer(game, SOFTWARE) != NO_ERR)
-		return (SDL_ERR);
-	game->texture = SDL_CreateTexture(game->rnd, SDL_PIXELFORMAT_ARGB8888,
-		SDL_TEXTUREACCESS_STREAMING, WIN_SIZE_W, WIN_SIZE_H);
-	if (!game->texture)
+	if (!game->wnd || create_renderer(game, SOFTWARE) || !game->texture)
 		return (SDL_ERR);
 	game->font = load_font("res/types.bmp", 5, 13);
+	if (!(game->font))
+		return (FNT_ERR);
 	set_array_font(game->font,
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!_+=~e$%()\\/{}[]<>^*\"'");
 	return (NO_ERR);
