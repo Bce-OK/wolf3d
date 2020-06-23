@@ -20,11 +20,16 @@ int		create_renderer(t_game *game, int is_software)
 	if (!game->surface)
 		return (SDL_ERR);
 	if (game->is_software)
+	{
 		game->rnd = SDL_CreateSoftwareRenderer(game->surface);
+	}
 	else
-		game->rnd = SDL_CreateRenderer
-			(game->wnd, 0,
-			SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	{
+		game->rnd = SDL_GetRenderer(game->wnd);
+		if (!game->rnd)
+			SDL_CreateRenderer(game->wnd, 0,
+				 SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	}
 	if (!game->rnd)
 		return (SDL_ERR);
 	game->texture = SDL_CreateTexture(game->rnd, SDL_PIXELFORMAT_ARGB8888,
