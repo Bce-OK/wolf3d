@@ -23,12 +23,12 @@ void	event_loop(t_game *game)
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
-				break;
+				break ;
 			pool_all_events(game, &event);
 		}
 		if ((SDL_GetTicks() - game_time) > TIMEOUT_MILISEC)
 		{
-			game->fps =  1000.0 / (SDL_GetTicks() - game_time);
+			game->fps = 1000.0 / (SDL_GetTicks() - game_time);
 			game_time = SDL_GetTicks();
 			process_game(game);
 		}
