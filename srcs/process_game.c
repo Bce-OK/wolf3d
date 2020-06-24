@@ -12,6 +12,7 @@
 
 #include "wolf3d.h"
 #include <math.h>
+#define PLAYER_ROTATE (3.14159 / 3600.0)
 
 int		event_keyup_process(SDL_Event *event, t_game *game)
 {
@@ -32,15 +33,16 @@ int		event_keyup_process(SDL_Event *event, t_game *game)
 
 int		event_mouse_process(SDL_Event *event, t_game *game)
 {
-	numeric		old_watch_x;
-	numeric		speed;
+	numeric			old_watch_x;
+	numeric			speed;
+	numeric const	player_rotate = PLAYER_ROTATE;
 
 	if (event->type == SDL_MOUSEMOTION)
 	{
 		old_watch_x = game->player->watch_x;
 		speed = (event->motion.x - game->player->prev_mouse_x) *
-				PLAYER_ROTATE * game->fps;
-		game->player->watch_x = +game->player->watch_x * cos(speed)
+				player_rotate * game->fps;
+		game->player->watch_x = game->player->watch_x * cos(speed)
 								- game->player->watch_y * sin(speed);
 		game->player->watch_y = old_watch_x * sin(speed)
 								+ game->player->watch_y * cos(speed);

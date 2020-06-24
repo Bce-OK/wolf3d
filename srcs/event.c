@@ -24,7 +24,7 @@ int		event_keyup(SDL_Event *event, t_game *game)
 		err = event_keyup_menu(event, game);
 	else if (game->state == G_EDITOR)
 		err = event_keyup_editor(event, game);
-	if (event->key.keysym.sym ==SDLK_ESCAPE && game->state != G_MENU
+	if (event->key.keysym.sym == SDLK_ESCAPE && game->state != G_MENU
 		&& game->state != G_QUIT)
 		game->state = G_MENU;
 	return (err);
@@ -69,39 +69,4 @@ int		event_mouse(SDL_Event *event, t_game *game)
 			game->mouse->button |= SDL_BUTTON(event->button.button);
 	}
 	return (err);
-}
-
-void	pool_all_events(t_game *game, SDL_Event *event)
-{
-	if (event->type == SDL_KEYUP)
-		event_keyup(event, game);
-	if (event->type == SDL_KEYDOWN)
-		event_keydown(event, game);
-	if (event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONUP
-	|| event->type == SDL_MOUSEBUTTONDOWN)
-		event_mouse(event, game);
-}
-
-void	event_loop(t_game *game)
-{
-	SDL_Event	event;
-	int			game_time;
-
-	game_time = SDL_GetTicks();
-	while (game->state != G_QUIT)
-	{
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
-				break;
-			pool_all_events(game, &event);
-		}
-		if ((SDL_GetTicks() - game_time) > TIMEOUT_MILISEC)
-		{
-			game->fps =  1000.0 / (SDL_GetTicks() - game_time);
-			game_time = SDL_GetTicks();
-			process_game(game);
-		}
-		render_game(game);
-	}
 }

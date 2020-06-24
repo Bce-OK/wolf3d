@@ -59,6 +59,8 @@ FILES := editor \
 	render \
 	texture \
 	utils \
+	map_reader \
+	loops \
 	window
 
 HEADERS = $(INCDIR1)/SDL2/SDL.h

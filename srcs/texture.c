@@ -44,7 +44,7 @@ unsigned int	get_texture_pixel(t_texture *tex, numeric x,
 	y = ((int)((numeric)y * TEX_REPEAT_COUNT * (numeric)tex->rect->h /
 		(numeric)height) % (tex->rect->h));
 	color = 0xff000000u |
-		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width)]|
+		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width)] |
 		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width) + 1] << 8u |
 		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width) + 2] << 16u;
 	return (color);

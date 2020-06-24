@@ -37,13 +37,13 @@ t_menu_button	*create_menu(t_game *game)
 	return (menu);
 }
 
-void	destroy_menu(t_game *game)
+void			destroy_menu(t_game *game)
 {
 	ft_bzero(game->menu, sizeof(t_menu_button) * (int)G_MENU);
 	ft_memdel((void**)&(game->menu));
 }
 
-int		event_keyup_menu(SDL_Event *event, t_game *game)
+int				event_keyup_menu(SDL_Event *event, t_game *game)
 {
 	if (event->key.keysym.sym == SDLK_ESCAPE)
 	{
@@ -58,7 +58,7 @@ int		event_keyup_menu(SDL_Event *event, t_game *game)
 	return (NO_ERR);
 }
 
-int		event_mouse_menu(SDL_Event *event, t_game *game)
+int				event_mouse_menu(SDL_Event *event, t_game *game)
 {
 	SDL_Point	cursor;
 	int			i;
@@ -66,7 +66,6 @@ int		event_mouse_menu(SDL_Event *event, t_game *game)
 	if (event->type == SDL_MOUSEBUTTONUP
 	&& event->button.button == SDL_BUTTON_LEFT)
 	{
-
 		cursor = set_to(event->motion.x, event->motion.y);
 		i = 0;
 		while (i < (int)G_MENU)
@@ -79,7 +78,7 @@ int		event_mouse_menu(SDL_Event *event, t_game *game)
 	return (NO_ERR);
 }
 
-int		render_menu_game(t_game *game)
+int				render_menu_game(t_game *game)
 {
 	int		i;
 
@@ -91,9 +90,4 @@ int		render_menu_game(t_game *game)
 		++i;
 	}
 	return (NO_ERR);
-}
-
-void	process_menu_game(t_game *game)
-{
-	(void)game;
 }

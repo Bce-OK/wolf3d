@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <math.h>
 #include "libft.h"
 
 int		lock_render(t_game *game)
@@ -75,9 +74,6 @@ void	process_game(t_game *game)
 {
 	if (game->state == G_PROCESS)
 		process_process_game(game);
-	if (game->state == G_MENU)
-		process_menu_game(game);
 	if (game->state == G_EDITOR)
 		process_editor_game(game);
 }
-

@@ -23,7 +23,9 @@ unsigned int	get_color_by_type(int wall_type)
 	else
 		return (0xffffffffu);
 }
-unsigned int	get_wall_color(t_ray *ray, t_game *game, numeric y, numeric height)
+
+unsigned int	get_wall_color(t_ray *ray, t_game *game,
+		numeric y, numeric height)
 {
 	int				type;
 	unsigned int	color;
@@ -36,7 +38,6 @@ unsigned int	get_wall_color(t_ray *ray, t_game *game, numeric y, numeric height)
 	color = get_texture_pixel(game->walls, ray->wall_x, y, height);
 	return (color);
 }
-
 
 void			casting(t_game *game, t_ray *ray)
 {
@@ -58,7 +59,7 @@ void			casting(t_game *game, t_ray *ray)
 			|| (ray->map_y >= game->level->size_y
 			|| (ray->map_x < 0 || ray->map_y < 0))
 			|| (game->level->array[ray->map_x +
-								   ray->map_y * game->level->size_x]))
+					ray->map_y * game->level->size_x]))
 			ray->hit = 1;
 	}
 }
