@@ -59,6 +59,7 @@ FILES := editor \
 	render \
 	texture \
 	utils \
+	utils2 \
 	map_reader \
 	loops \
 	window
@@ -112,7 +113,7 @@ clean:
 
 clean_sdl:
 	echo $(PATH_SDL)
-	make -C $(PATH_SDL)/SDL2 clean
+	make -C $(PATH_SDL)$(SLASH) clean
 
 fclean: clean clean_sdl
 	make -C $(LIBDIR) fclean
