@@ -185,6 +185,7 @@ void						destroy_menu(t_game *game);
 int							destroy_window(t_game *game);
 
 void						event_loop(t_game *game);
+void						pool_all_events(t_game *game, SDL_Event *event);
 void						render_map(t_game *game);
 int							render(t_game *game);
 void						casting(t_game *game, t_ray *ray);

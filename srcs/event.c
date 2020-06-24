@@ -70,3 +70,14 @@ int		event_mouse(SDL_Event *event, t_game *game)
 	}
 	return (err);
 }
+
+void	pool_all_events(t_game *game, SDL_Event *event)
+{
+	if (event->type == SDL_KEYUP)
+		event_keyup(event, game);
+	if (event->type == SDL_KEYDOWN)
+		event_keydown(event, game);
+	if (event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONUP
+		|| event->type == SDL_MOUSEBUTTONDOWN)
+		event_mouse(event, game);
+}
