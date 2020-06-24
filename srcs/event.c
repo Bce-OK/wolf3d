@@ -24,7 +24,7 @@ int		event_keyup(SDL_Event *event, t_game *game)
 		err = event_keyup_menu(event, game);
 	else if (game->state == G_EDITOR)
 		err = event_keyup_editor(event, game);
-	if (event->key.keysym.sym ==SDLK_ESCAPE && game->state != G_MENU
+	if (event->key.keysym.sym == SDLK_ESCAPE && game->state != G_MENU
 		&& game->state != G_QUIT)
 		game->state = G_MENU;
 	return (err);
@@ -80,40 +80,4 @@ void	pool_all_events(t_game *game, SDL_Event *event)
 	if (event->type == SDL_MOUSEMOTION || event->type == SDL_MOUSEBUTTONUP
 	|| event->type == SDL_MOUSEBUTTONDOWN)
 		event_mouse(event, game);
-}
-
-int     render_loop(void *game)
-{
-	int			game_time;
-
-	game_time = SDL_GetTicks();
-    while (((t_game*)game)->state != G_QUIT)
-    {
-        render_game((t_game *) game);
-        SDL_Delay(1);
-		((t_game*)game)->fps =  1000.0 / (SDL_GetTicks() - game_time);
-		game_time = SDL_GetTicks();
-    }
-    return (NO_ERR);
-}
-
-int 	event_loop(void *game)
-{
-	SDL_Event	event;
-	int			game_time;
-
-	game_time = SDL_GetTicks();
-	while (((t_game*)game)->state != G_QUIT)
-	{
-		while (SDL_PollEvent(&event))
-		{
-			if (event.type == SDL_QUIT)
-				break;
-			pool_all_events(game, &event);
-		}
-		if ((SDL_GetTicks() - game_time) > TIMEOUT_MILISEC)
-			process_game(game);
-        SDL_Delay(1);
-	}
-	return (NO_ERR);
 }

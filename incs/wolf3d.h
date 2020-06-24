@@ -23,7 +23,6 @@
 # define 	EDITOR_SIZE_RECT	50
 # define	SOFTWARE			1
 
-# define	PLAYER_ROTATE		3.14159 / 3600
 # define	PLAYER_MOVE			0.00125
 # define	TIMEOUT_MILISEC		30
 # define	MAX_DISTANCE		5.0
@@ -187,6 +186,7 @@ int							destroy_window(t_game *game);
 
 int 						event_loop(void *game);
 int 						render_loop(void *game);
+void						pool_all_events(t_game *game, SDL_Event *event);
 void						render_map(t_game *game);
 int							render(t_game *game);
 void						casting(t_game *game, t_ray *ray);

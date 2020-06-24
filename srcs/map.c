@@ -49,7 +49,7 @@ void			render_start_end(t_game *game)
 	endpos.w = SIZE_RECT;
 	endpos.h = SIZE_RECT;
 	fill_rect(game->pixels, game->rect, &startpos, 0xa0a0a0ffu);
-	fill_rect(game->pixels, game->rect, &endpos,0x90909090u);
+	fill_rect(game->pixels, game->rect, &endpos, 0x90909090u);
 }
 
 void			render_watch(t_game *game)
@@ -70,7 +70,7 @@ void			render_map(t_game *game)
 	i = 0;
 	while (i < game->level->size_x * game->level->size_y)
 	{
-		render_rect(game, (char) (game->level->array[i] & 0xff),
+		render_rect(game, (char)(game->level->array[i] & 0xff),
 					i % game->level->size_x, i / game->level->size_x);
 		++i;
 	}

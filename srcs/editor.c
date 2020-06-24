@@ -16,16 +16,30 @@ int		event_keyup_editor(SDL_Event *event, t_game *game)
 {
 	(void)event;
 	(void)game;
-
 	return (NO_ERR);
+}
+
+void	set_map_type(const t_game *game, int i, int j)
+{
+	SDL_Rect	rect;
+	SDL_Point	p;
+
+	rect = create_rect(j * EDITOR_SIZE_RECT, i * EDITOR_SIZE_RECT,
+		EDITOR_SIZE_RECT, EDITOR_SIZE_RECT);
+	p = set_to(game->mouse->x, game->mouse->y);
+	if (SDL_PointInRect(&p, &rect))
+	{
+		if (game->level->array[j + i * game->level->size_x])
+			game->level->array[j + i * game->level->size_x] = 0;
+		else
+			game->level->array[j + i * game->level->size_x] = 7;
+	}
 }
 
 int		event_mouse_editor(SDL_Event *event, t_game *game)
 {
 	int			i;
 	int			j;
-	SDL_Rect	rect;
-	SDL_Point	p;
 
 	if (event->type == SDL_MOUSEBUTTONUP)
 	{
@@ -35,16 +49,8 @@ int		event_mouse_editor(SDL_Event *event, t_game *game)
 			j = -1;
 			while (++j < game->level->size_x)
 			{
-				rect = create_rect(j * EDITOR_SIZE_RECT, i * EDITOR_SIZE_RECT,
-								   EDITOR_SIZE_RECT, EDITOR_SIZE_RECT);
-				p = set_to(game->mouse->x, game->mouse->y);
-				if (event->button.button && SDL_PointInRect(&p, &rect))
-				{
-					if (game->level->array[j + i * game->level->size_x])
-						game->level->array[j + i * game->level->size_x] = 0;
-					else
-						game->level->array[j + i * game->level->size_x] = 7;
-				}
+				if (event->button.button)
+					set_map_type(game, i, j);
 			}
 		}
 	}
@@ -59,7 +65,7 @@ void	render_editor_game(t_game *game)
 
 	i = 0;
 	rect = create_rect(0, 0, game->level->size_x * EDITOR_SIZE_RECT,
-					   game->level->size_y * EDITOR_SIZE_RECT);
+		game->level->size_y * EDITOR_SIZE_RECT);
 	fill_rect(game->pixels, game->rect, &rect, 0x90909090);
 	while (i < game->level->size_y)
 	{
@@ -69,7 +75,7 @@ void	render_editor_game(t_game *game)
 			if (game->level->array[j + i * game->level->size_x])
 			{
 				rect = create_rect(j * EDITOR_SIZE_RECT, i * EDITOR_SIZE_RECT,
-								   EDITOR_SIZE_RECT, EDITOR_SIZE_RECT);
+						EDITOR_SIZE_RECT, EDITOR_SIZE_RECT);
 				fill_rect(game->pixels, game->rect, &rect, 0xffffffff);
 			}
 			++j;

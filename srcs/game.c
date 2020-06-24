@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <math.h>
 #include "libft.h"
 
 int		lock_render(t_game *game)
@@ -29,12 +28,12 @@ int		lock_render(t_game *game)
 	else
 		err = SDL_LockTexture(game->texture,
 			NULL, (void**)&game->pixels, &game->pitch);
-    if ((SDL_LockMutex(game->mutex) == 0) && (!err))
+	if ((SDL_LockMutex(game->mutex) == 0) && (!err))
 	{
-        ft_bzero(game->pixels,
-                 sizeof(int) * game->rect->w * game->rect->h);
-        SDL_UnlockMutex(game->mutex);
-    }
+		ft_bzero(game->pixels,
+			sizeof(int) * game->rect->w * game->rect->h);
+		SDL_UnlockMutex(game->mutex);
+	}
 	return (err);
 }
 
@@ -78,9 +77,6 @@ void	process_game(t_game *game)
 {
 	if (game->state == G_PROCESS)
 		process_process_game(game);
-	if (game->state == G_MENU)
-		process_menu_game(game);
 	if (game->state == G_EDITOR)
 		process_editor_game(game);
 }
-

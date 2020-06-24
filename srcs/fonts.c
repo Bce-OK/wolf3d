@@ -44,7 +44,7 @@ void	set_transparent(t_font *font)
 	}
 }
 
-t_font	*load_font(char* filename, int rows_count, int cols_count)
+t_font	*load_font(char *filename, int rows_count, int cols_count)
 {
 	SDL_Surface		*bmp;
 	t_font			*font;
@@ -95,7 +95,7 @@ void	print_char(t_game *game, SDL_Point p, t_font *font, char ch)
 	while (i < font->letter_h)
 	{
 		j = 0;
-		while (j <  font->letter_w)
+		while (j < font->letter_w)
 		{
 			color = font->pixels[((letter_in_font_col * font->letter_w) + j) +
 				((letter_in_font_row * font->letter_h) + i) * font->full_w];
