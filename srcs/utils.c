@@ -25,53 +25,21 @@ unsigned int	get_color_by_len(unsigned int max_bright,
 	unsigned int	bright;
 
 	if (length < max_length)
-		bright = get_part_by_len
-			(max_bright & 0xffu, length, max_length) |
-			get_part_by_len
-			((max_bright & 0xff00u) >> 8u, length, max_length) << 8u |
-			get_part_by_len
-			((max_bright & 0xff0000u) >> 16u, length, max_length) << 16u |
-			get_part_by_len
-			((max_bright & 0xff000000u) >> 24u, length, max_length) << 24u;
+		bright = get_part_by_len(max_bright & 0xffu,
+				length, max_length) |
+			get_part_by_len((max_bright & 0xff00u) >> 8u,
+					length, max_length) << 8u |
+			get_part_by_len((max_bright & 0xff0000u) >> 16u,
+					length, max_length) << 16u |
+			get_part_by_len((max_bright & 0xff000000u) >> 24u,
+					length, max_length) << 24u;
 	else
 		bright = 0;
 	return (bright);
 }
 
-void	fill_rect(unsigned int *pixels, SDL_Rect *view,
-	SDL_Rect *rect, unsigned int color)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	if (rect->x + rect->w > view->w || rect->x < 0
-	|| rect->y + rect->h > view->h || rect->y <0)
-		return ;
-	while (y < rect->h)
-	{
-		x = 0;
-		while (x < rect->w)
-		{
-			pixels[rect->x + x + (rect->y + y) * view->w] = color;
-			++x;
-		}
-		++y;
-	}
-}
-
-SDL_Rect	create_rect(int x, int y, int w, int h)
-{
-	SDL_Rect	r;
-	r.x = x;
-	r.y = y;
-	r.w = w;
-	r.h = h;
-	return (r);
-}
-
-void	draw_line_by_y(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
-	unsigned int color)
+void			draw_line_by_y(unsigned int *pixels, SDL_Rect *view,
+		SDL_Rect *line, unsigned int color)
 {
 	float	x;
 	float	y;
@@ -90,8 +58,8 @@ void	draw_line_by_y(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
 	}
 }
 
-void	draw_line_by_x(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
-	unsigned int color)
+void			draw_line_by_x(unsigned int *pixels, SDL_Rect *view,
+		SDL_Rect *line, unsigned int color)
 {
 	float	x;
 	float	y;
@@ -110,7 +78,7 @@ void	draw_line_by_x(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
 	}
 }
 
-void	draw_line(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
+void			draw_line(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
 	unsigned int color)
 {
 	int		len_x;
@@ -125,12 +93,4 @@ void	draw_line(unsigned int *pixels, SDL_Rect *view, SDL_Rect *line,
 		draw_line_by_y(pixels, view, line, color);
 	else
 		draw_line_by_x(pixels, view, line, color);
-}
-
-SDL_Point	set_to(int x, int y)
-{
-	SDL_Point	p;
-	p.x = x;
-	p.y = y;
-	return (p);
 }

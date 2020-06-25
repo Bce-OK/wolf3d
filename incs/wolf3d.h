@@ -213,6 +213,7 @@ void						free_font(t_font *pfont);
 void						print_str(t_game *game, SDL_Point p,
 	t_font *font, char *str);
 SDL_Point					set_to(int x, int y);
+void	                    set_transparent(t_font *font);
 
 int							event_keyup_process(SDL_Event *event, t_game *game);
 int							event_keyup_menu(SDL_Event *event, t_game *game);
