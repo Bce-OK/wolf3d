@@ -22,6 +22,7 @@
 # define 	SIZE_RECT			20.0
 # define 	EDITOR_SIZE_RECT	50
 # define	SOFTWARE			1
+# define	MAX_LETTERS_COUNT	255
 
 # define	PLAYER_MOVE			0.00125
 # define	TIMEOUT_MILISEC		30
