@@ -30,6 +30,20 @@ int		set_array_font(t_font *font, char *array)
 	return (NO_ERR);
 }
 
+void	set_transparent(t_font *font)
+{
+	int		i;
+
+	i = 0;
+	while (i < font->full_h * font->full_w)
+	{
+		font->pixels[i] = (font->pixels[i] == font->transparent_color)
+			? 0x00000000u
+			: font->pixels[i];
+		++i;
+	}
+}
+
 t_font	*load_font(char *filename, int rows_count, int cols_count)
 {
 	SDL_Surface		*bmp;
