@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <math.h>
+#include "libft.h"
 
 SDL_Point	set_to(int x, int y)
 {

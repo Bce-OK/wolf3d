@@ -13,23 +13,6 @@
 #include "wolf3d.h"
 #include "libft.h"
 
-#define MAX_LETTERS_COUNT 255
-
-int		set_array_font(t_font *font, char *array)
-{
-	int		i;
-
-	i = 0;
-	font->array = ft_memalloc(sizeof(char) * MAX_LETTERS_COUNT);
-	ft_memset(font->array, 0xff, MAX_LETTERS_COUNT);
-	while (i < font->rows_count * font->cols_count)
-	{
-		font->array[(int)array[i]] = (char)i;
-		++i;
-	}
-	return (NO_ERR);
-}
-
 void	set_transparent(t_font *font)
 {
 	int		i;
