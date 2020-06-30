@@ -96,10 +96,10 @@ int		render(t_game *game)
 		casting(game, &ray);
 		if (ray.side)
 			ray.perp_wall_dist = (ray.map_y - game->player->pos_y +
-				((1 - ray.step_y) >> 1)) / ray.dir_y;
+					((1 - ray.step_y) >> 1)) / ray.dir_y;
 		else
 			ray.perp_wall_dist = (ray.map_x - game->player->pos_x +
-				((1 - ray.step_x) >> 1)) / ray.dir_x;
+					((1 - ray.step_x) >> 1)) / ray.dir_x;
 		if (SDL_TryLockMutex(game->mutex) == 0)
 		{
 			draw(game, x, ray.perp_wall_dist, &ray);
