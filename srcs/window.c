@@ -28,7 +28,7 @@ int		create_renderer(t_game *game, int is_software)
 		game->rnd = SDL_GetRenderer(game->wnd);
 		if (!game->rnd)
 			SDL_CreateRenderer(game->wnd, 0,
-				SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+				 SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	}
 	if (!game->rnd)
 		return (SDL_ERR);
@@ -50,8 +50,8 @@ int		create_window(t_game *game)
 	game->rect->w = WIN_SIZE_W;
 	game->rect->h = WIN_SIZE_H;
 	game->wnd = SDL_CreateWindow(WIN_TITLE,
-			WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
+					 WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
+SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
 	if (!game->wnd || create_renderer(game, SOFTWARE) || !game->texture)
 		return (SDL_ERR);
 	game->font = load_font("res/types.bmp", 5, 13);
@@ -62,13 +62,13 @@ int		create_window(t_game *game)
 	return (NO_ERR);
 }
 
-int		destroy_window(t_game *game)
+int destroy_window(t_game *game)
 {
 	free_font(game->font);
 	SDL_DestroyTexture(game->texture);
 	SDL_DestroyRenderer(game->rnd);
 	SDL_FreeSurface(game->surface);
 	SDL_DestroyWindow(game->wnd);
-	ft_memdel((void **)&(game->rect));
+	ft_memdel((void **) &(game->rect));
 	return (0);
 }

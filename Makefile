@@ -48,7 +48,6 @@ INCFLAGS = -I$(LIBDIR) -I$(INCDIR1) -I$(INCSDL)
 FILES := editor \
 	event \
 	fonts \
-	fonts_cont \
 	game \
 	game_menu \
 	level \
@@ -60,7 +59,6 @@ FILES := editor \
 	render \
 	texture \
 	utils \
-	utils2 \
 	map_reader \
 	loops \
 	window
@@ -114,7 +112,7 @@ clean:
 
 clean_sdl:
 	echo $(PATH_SDL)
-	make -C $(PATH_SDL)$(SLASH) clean
+	make -C $(PATH_SDL)/SDL2 clean
 
 fclean: clean clean_sdl
 	make -C $(LIBDIR) fclean
