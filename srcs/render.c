@@ -109,3 +109,6 @@ int		render(t_game *game)
 	}
 	return (NO_ERR);
 }
+
+
+
