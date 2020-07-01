@@ -26,10 +26,10 @@ LIB_OBJS		= $(addprefix $(LIBDIR), $(LIB_OBJ))
 LIB_OBJ			= *.o
 LIB_H			= libft.h
 LIB_INC			= $(addprefix $(LIBDIR), $(LIB_H))
-#WOLF_HED		= reader.h \
+WOLF_HED		= reader.h \
 				wolf3d.h \
 				libft.h
-#WOLF_INC		= $(addprefix $(INCDIR1), $(WOLF_HED))
+WOLF_INC		= $(addprefix $(INCDIR1), $(WOLF_HED))
 
 INCDIR1 = ./incs/
 INCSDL = ./SDL/include
@@ -101,7 +101,7 @@ $(OBJDIR):
 $(LIBDIR)%.o: $(LIBDIR)%.c $(LIB_INC)
 	make -C $(LIBDIR)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCDIR1)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(WOLF_INC)
 	@echo "test" $@ "" $(<) ""
 	$(CC) $(CCFLAGS) $(INCFLAGS) -c -o $@ $<
 
