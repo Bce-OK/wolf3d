@@ -20,9 +20,18 @@ SRCDIR = srcs
 OBJDIR = objs
 
 LIBUIDIR = .
-LIBDIR = ./libs/libft
+LIBDIR = ./libs/libft/
 
-INCDIR1 = ./incs
+LIB_OBJS		= $(addprefix $(LIBDIR), $(LIB_OBJ))
+LIB_OBJ			= *.o
+LIB_H			= libft.h
+LIB_INC			= $(addprefix $(LIBDIR), $(LIB_H))
+#WOLF_HED		= reader.h \
+				wolf3d.h \
+				libft.h
+#WOLF_INC		= $(addprefix $(INCDIR1), $(WOLF_HED))
+
+INCDIR1 = ./incs/
 INCSDL = ./SDL/include
 
 # PATH_SDL := $(addsuffix /libs, $(shell pwd))
@@ -89,7 +98,7 @@ all: $(NAME)
 $(OBJDIR):
 	mkdir $(OBJDIR)
 
-libs:
+$(LIBDIR)%.o: $(LIBDIR)%.c $(LIB_INC)
 	make -C $(LIBDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c $(INCDIR1)
@@ -100,10 +109,7 @@ $(SDL):
 	cd $(PATH_SDL); ./configure --prefix=$(PATH_SDL)/..; make;
 	make -sC $(PATH_SDL) install
 
-$(LIBDIR):
-	make -sC $(LIBDIR)
-
-$(NAME):libs $(OBJDIR) $(SDL) $(LIBDIR) $(FULL_OBJS)
+$(NAME): $(LIB_OBJS) $(OBJDIR) $(SDL) $(FULL_OBJS)
 	@echo $(CC) $(CCFLAGS) $(INCFLAGS) -o $(NAME) $(FULL_OBJS) $(LIBFLAGS)
 	$(CC) $(CCFLAGS) $(INCFLAGS) -o $(NAME) $(FULL_OBJS) $(LIBFLAGS)
 
