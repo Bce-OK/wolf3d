@@ -12,21 +12,6 @@
 
 #include "wolf3d.h"
 
-int		render_loop(void *game)
-{
-	int			game_time;
-
-	game_time = SDL_GetTicks();
-	while (((t_game*)game)->state != G_QUIT)
-	{
-		render_game((t_game*)game);
-		SDL_Delay(1);
-		((t_game*)game)->fps = 1000.0 / (SDL_GetTicks() - game_time);
-		game_time = SDL_GetTicks();
-	}
-	return (NO_ERR);
-}
-
 int		event_loop(void *game)
 {
 	SDL_Event	event;
@@ -42,8 +27,12 @@ int		event_loop(void *game)
 			pool_all_events(game, &event);
 		}
 		if ((SDL_GetTicks() - game_time) > TIMEOUT_MILISEC)
+		{
+			((t_game*)game)->fps = 1000.0 / (SDL_GetTicks() - game_time);
+			game_time = SDL_GetTicks();
 			process_game(game);
-		SDL_Delay(1);
+		}
+		render_game(game);
 	}
 	return (NO_ERR);
 }
