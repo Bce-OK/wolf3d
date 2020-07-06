@@ -24,6 +24,7 @@
 # define	SOFTWARE			1
 # define	MAX_LETTERS_COUNT	255
 
+# define	PLAYER_ROTATE		3.14159 / 3600
 # define	PLAYER_MOVE			0.00125
 # define	TIMEOUT_MILISEC		30
 # define	MAX_DISTANCE		5.0
@@ -159,7 +160,6 @@ typedef struct				s_game
 	t_font					*font;
 	t_mouse					*mouse;
 	t_menu_button			*menu;
-	SDL_mutex				*mutex;
 }							t_game;
 
 t_map						*load_map_from_file(char const *filename);

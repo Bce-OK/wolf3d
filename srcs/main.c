@@ -20,10 +20,7 @@ int		initialize(t_game *game)
 	if (!game->level)
 		return (MAP_ERR);
 	if (create_window(game) != NO_ERR)
-	{
-		printf("%s\n", SDL_GetError());
 		return (SDL_ERR);
-	}
 	if (create_payer(game) != NO_ERR)
 		return (PLY_ERR);
 	load_walls_texture(game, "res/wolftextures.bmp", 8);
@@ -42,21 +39,6 @@ void	finalize(t_game *game)
 	ft_memdel((void**)&game);
 }
 
-int		thread_init(t_game *game)
-{
-	int			status;
-	SDL_Thread	*render_thread;
-
-	game->mutex = SDL_CreateMutex();
-	if (!game->mutex)
-		return (NO_ERR);
-	render_thread = SDL_CreateThread(render_loop, "render_loop", game);
-	event_loop(game);
-	SDL_WaitThread(render_thread, &status);
-	SDL_DestroyMutex(game->mutex);
-	return (status);
-}
-
 int		main(int argc, char **argv)
 {
 	t_game	*game;
@@ -70,7 +52,7 @@ int		main(int argc, char **argv)
 		return (0);
 	if ((err = initialize(game)) != NO_ERR)
 		return (err);
-	thread_init(game);
+	event_loop(game);
 	finalize(game);
 	SDL_Quit();
 	return (0);
