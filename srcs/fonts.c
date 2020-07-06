@@ -33,6 +33,8 @@ t_font	*load_font(char *filename, int rows_count, int cols_count)
 	t_font			*font;
 
 	bmp = SDL_LoadBMP(filename);
+	if (!bmp)
+		return (NULL);
 	font = ft_memalloc(sizeof(t_font));
 	font->full_w = bmp->w;
 	font->full_h = bmp->h;
