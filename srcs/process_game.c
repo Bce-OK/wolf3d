@@ -12,7 +12,6 @@
 
 #include "wolf3d.h"
 #include <math.h>
-#define PLAYER_ROTATE (3.14159 / 3600.0)
 
 int		event_keyup_process(SDL_Event *event, t_game *game)
 {
