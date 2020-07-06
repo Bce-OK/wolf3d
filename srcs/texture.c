@@ -56,6 +56,8 @@ void			load_walls_texture(t_game *game, char *filename, int count)
 	t_texture		*texture;
 
 	surface = SDL_LoadBMP(filename);
+	if (!surface)
+		return ;
 	texture = ft_memalloc(sizeof(t_texture));
 	texture->width = surface->w;
 	texture->height = surface->h;
@@ -75,6 +77,8 @@ void			load_walls_texture(t_game *game, char *filename, int count)
 
 void			free_walls_texture(t_game *game)
 {
+	if (!game->walls)
+		return ;
 	ft_memdel((void**)&(game->walls->pixels));
 	ft_memdel((void**)&(game->walls->rect));
 	ft_memdel((void**)&(game->walls));
