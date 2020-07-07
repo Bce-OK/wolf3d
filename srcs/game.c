@@ -53,6 +53,7 @@ void	unlock_render(t_game *game)
 void	render_game(t_game *game)
 {
 	SDL_Point	point;
+	char		*str;
 
 	lock_render(game);
 	if (game->state == G_PROCESS || game->state == G_PAUSE)
@@ -66,7 +67,9 @@ void	render_game(t_game *game)
 	print_str(game, point, game->font, "FPS:");
 	point.x = game->rect->w - game->font->letter_w * 5;
 	point.y = game->font->letter_h;
-	print_str(game, point, game->font, ft_itoa((int)game->fps));
+	str = ft_itoa((int)game->fps);
+	print_str(game, point, game->font, str);
+	free(str);
 	unlock_render(game);
 }
 
