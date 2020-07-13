@@ -69,7 +69,7 @@ void	render_game(t_game *game)
 	point.y = game->font->letter_h;
 	str = ft_itoa((int)game->fps);
 	print_str(game, point, game->font, str);
-	free(str);
+	ft_strdel(&str);
 	unlock_render(game);
 }
 
