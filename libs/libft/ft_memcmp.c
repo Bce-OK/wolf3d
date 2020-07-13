@@ -17,15 +17,14 @@
 # define INC_PTR(x)  x++
 #endif
 
-
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	while (n)
 	{
 		if (*(char*)s1 != *(char*)s2)
 			return (*(unsigned char*)s1 - *(unsigned char*)s2);
-        INC_PTR(s1);
-        INC_PTR(s2);
+		INC_PTR(s1);
+		INC_PTR(s2);
 		--n;
 	}
 	return (0);

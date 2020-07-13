@@ -16,6 +16,7 @@
 #else
 # define INC_PTR(x)  x++
 #endif
+
 void	*ft_memset(void *b, int c, size_t len)
 {
 	char	*start;
@@ -25,7 +26,7 @@ void	*ft_memset(void *b, int c, size_t len)
 	while (len--)
 	{
 		*(char*)b = c & 0xff;
-        INC_PTR(b);
+		INC_PTR(b);
 	}
 	return (start);
 }

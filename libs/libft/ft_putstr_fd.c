@@ -11,15 +11,16 @@
 /* ************************************************************************** */
 
 #ifdef WIN32
-#include <io.h>
-#define write _write
+# include <io.h>
+# define WRITE _write
 #else
-#include <unistd.h>
+# include <unistd.h>
+# define WRITE write
 #endif
 #include "libft.h"
 
 void	ft_putstr_fd(char const *s, int fd)
 {
 	if (s)
-		write(fd, s, ft_strlen(s));
+		WRITE(fd, s, ft_strlen(s));
 }

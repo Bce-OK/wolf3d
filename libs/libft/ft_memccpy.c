@@ -21,7 +21,7 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
 	while (n)
 	{
-        *((char*)INC_PTR(dst)) = *((char*)INC_PTR(src));
+		*((char*)INC_PTR(dst)) = *((char*)INC_PTR(src));
 		if (*((unsigned char*)src - 1) == (unsigned char)c)
 			break ;
 		--n;

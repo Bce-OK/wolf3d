@@ -12,16 +12,18 @@
 
 #ifdef __APPLE__
 # include <unistd.h>
+# define WRITE write
 #else
 # if WIN_32
-#  define write _write
+#  define WRITE _write
 #  include <io.h>
 # else
 #  include <sys/unistd.h>
+#  define WRITE write
 # endif
 #endif
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, 1);
+	WRITE(fd, &c, 1);
 }

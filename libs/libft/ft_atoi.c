@@ -14,15 +14,11 @@
 
 static int	ft_is_overlong(int neg, unsigned long num)
 {
-	// if (num & (sizeof(long) * 8 - 1) == 0)
-	// 	return (num);
-	// if (neg > 0 && (num > 0x8000000000000000))
-	// 	return (0);
-	// if (neg < 0 && (num < 0x8000000000000000))
-	// 	return (-1);
-	// return (0);
-    (void) neg;
-    return (num);
+	if (neg > 0 && (num > 0x8000000000000000))
+		return (0);
+	if (neg < 0 && (num < 0x8000000000000000))
+		return (-1);
+	return (0);
 }
 
 int			ft_atoi(const char *str)

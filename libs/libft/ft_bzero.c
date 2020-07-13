@@ -21,7 +21,7 @@ void	ft_bzero(void *s, size_t n)
 {
 	while (n--)
 	{
-        *(char *)s = (char) 0;
-        INC_PTR(s);
-    }
+		*(char*)s = (char)0;
+		INC_PTR(s);
+	}
 }
