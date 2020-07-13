@@ -51,7 +51,7 @@ int		create_window(t_game *game)
 	game->rect->h = WIN_SIZE_H;
 	game->wnd = SDL_CreateWindow(WIN_TITLE,
 			WIN_POS_X, WIN_POS_Y, WIN_SIZE_W, WIN_SIZE_H,
-			SDL_WINDOW_OPENGL | SDL_WINDOW_BORDERLESS);
+			SDL_WINDOW_OPENGL);
 	if (!game->wnd || create_renderer(game, SOFTWARE) || !game->texture)
 		return (SDL_ERR);
 	game->font = load_font("res/types.bmp", 5, 13);

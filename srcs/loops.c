@@ -23,7 +23,10 @@ int		event_loop(void *game)
 		while (SDL_PollEvent(&event))
 		{
 			if (event.type == SDL_QUIT)
+			{
+				((t_game*)game)->state = G_QUIT;
 				break ;
+			}
 			pool_all_events(game, &event);
 		}
 		if ((SDL_GetTicks() - game_time) > TIMEOUT_MILISEC)
