@@ -20,7 +20,7 @@ int		event_keyup_process(SDL_Event *event, t_game *game)
 		game->state = G_MENU;
 		SDL_ShowCursor(1);
 	}
-	if (event->key.keysym.sym == SDLK_t)
+	if (event->key.keysym.sym == SDLK_t && game->walls)
 		game->walls->enabled = !game->walls->enabled;
 	if ((event->key.keysym.sym == SDLK_w)
 		|| (event->key.keysym.sym == SDLK_s)
