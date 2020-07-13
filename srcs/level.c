@@ -34,5 +34,9 @@ t_map	*load_map_from_file(char const *filename)
 		}
 	}
 	close(fd);
-	return (map);
+	if (map && map->size_x > 0 && map->size_y > 0)
+		return (map);
+	ft_putendl_fd("ERROR!\tmap reading error!", FD_ERR);
+	ft_memdel((void**)&map);
+	return (NULL);
 }
