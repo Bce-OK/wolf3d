@@ -22,6 +22,10 @@ int		event_keyup_process(SDL_Event *event, t_game *game)
 	}
 	if (event->key.keysym.sym == SDLK_t && game->walls)
 		game->walls->enabled = !game->walls->enabled;
+	if (event->key.keysym.sym == SDLK_LEFT)
+		rotate_player(game, -PLAYER_ROTATE * 500);
+	if (event->key.keysym.sym == SDLK_RIGHT)
+		rotate_player(game, PLAYER_ROTATE * 500);
 	if ((event->key.keysym.sym == SDLK_w)
 		|| (event->key.keysym.sym == SDLK_s)
 		|| (event->key.keysym.sym == SDLK_d)
@@ -32,19 +36,10 @@ int		event_keyup_process(SDL_Event *event, t_game *game)
 
 int		event_mouse_process(SDL_Event *event, t_game *game)
 {
-	numeric			old_watch_x;
-	numeric			speed;
-	numeric const	player_rotate = PLAYER_ROTATE;
-
 	if (event->type == SDL_MOUSEMOTION)
 	{
-		old_watch_x = game->player->watch_x;
-		speed = (event->motion.x - game->player->prev_mouse_x) *
-				player_rotate * game->fps;
-		game->player->watch_x = game->player->watch_x * cos(speed)
-								- game->player->watch_y * sin(speed);
-		game->player->watch_y = old_watch_x * sin(speed)
-								+ game->player->watch_y * cos(speed);
+		rotate_player(game, (event->motion.x - game->player->prev_mouse_x)
+							* PLAYER_ROTATE * game->fps);
 		game->player->prev_mouse_x = event->motion.x;
 	}
 	return (NO_ERR);

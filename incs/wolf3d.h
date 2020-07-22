@@ -24,8 +24,8 @@
 # define	SOFTWARE			1
 # define	MAX_LETTERS_COUNT	255
 
-# define	PLAYER_ROTATE		3.14159 / 3600
-# define	PLAYER_MOVE			0.00125
+# define	PLAYER_ROTATE		(3.14159 / 3600)
+# define	PLAYER_MOVE			0.0025
 # define	TIMEOUT_MILISEC		30
 # define	MAX_DISTANCE		5.0
 
@@ -87,6 +87,7 @@ typedef struct				s_player
 	numeric					watch_y;
 	int						prev_mouse_x;
 	t_move					move;
+	int						is_running;
 }							t_player;
 
 typedef struct				s_menu_button
@@ -192,6 +193,7 @@ int							render(t_game *game);
 void						casting(t_game *game, t_ray *ray);
 void						move_player(t_game *game,
 	numeric speed_x, numeric speed_y);
+void						rotate_player(const t_game *game, numeric speed);
 unsigned int				get_wall_color(t_ray *ray, t_game *game,
 	numeric y, numeric height);
 int							get_wall_type(t_ray *ray, t_game *game);

@@ -27,6 +27,8 @@ int		event_keyup(SDL_Event *event, t_game *game)
 	if (event->key.keysym.sym == SDLK_ESCAPE && game->state != G_MENU
 		&& game->state != G_QUIT)
 		game->state = G_MENU;
+	if (event->key.keysym.scancode == SDL_SCANCODE_LSHIFT)
+		game->player->is_running = 0;
 	return (err);
 }
 
@@ -40,6 +42,8 @@ int		event_keydown(SDL_Event *event, t_game *game)
 		game->player->move = PM_RIGHT;
 	if (event->key.keysym.sym == SDLK_a)
 		game->player->move = PM_LEFT;
+	if (event->key.keysym.scancode == SDL_SCANCODE_LSHIFT)
+		game->player->is_running = 1;
 	return (NO_ERR);
 }
 

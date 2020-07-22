@@ -33,17 +33,32 @@ void	move_player(t_game *game, numeric speed_x, numeric speed_y)
 {
 	int		next_x;
 	int		next_y;
+	numeric	speed;
 
-	next_x = (int)(game->player->pos_x + speed_x);
-	next_y = (int)(game->player->pos_y + speed_y);
+	speed = game->player->is_running ? 1.0 : 3.0;
+	next_x = (int)(game->player->pos_x + speed * speed_x);
+	next_y = (int)(game->player->pos_y + speed * speed_y);
 	if ((next_x != (int)game->player->pos_x)
 	|| (next_y != (int)game->player->pos_y))
 	{
 		if (game->level->array[next_x + next_y * game->level->size_x])
 			return ;
 	}
-	game->player->pos_x += speed_x;
-	game->player->pos_y += speed_y;
+	game->player->pos_x += speed * speed_x;
+	game->player->pos_y += speed * speed_y;
+}
+
+void	rotate_player(const t_game *game, numeric speed)
+{
+	numeric			old_watch_x;
+	numeric			angle;
+
+	old_watch_x = game->player->watch_x;
+	angle = (speed);
+	game->player->watch_x = old_watch_x * cos(angle)
+							- game->player->watch_y * sin(angle);
+	game->player->watch_y = old_watch_x * sin(angle)
+							+ game->player->watch_y * cos(angle);
 }
 
 void	destroy_player(t_game *game)
