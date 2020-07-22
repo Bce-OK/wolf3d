@@ -150,6 +150,7 @@ typedef struct				s_game
 	SDL_Surface				*surface;
 	SDL_Texture				*texture;
 	SDL_Rect				*rect;
+	int						endgame;
 	unsigned int			*pixels;
 	int						pitch;
 	t_game_state			state;
@@ -190,6 +191,8 @@ int 						event_loop(void *game);
 void						pool_all_events(t_game *game, SDL_Event *event);
 void						render_map(t_game *game);
 int							render(t_game *game);
+void						render_endgame(t_game *game);
+
 void						casting(t_game *game, t_ray *ray);
 void						move_player(t_game *game,
 	numeric speed_x, numeric speed_y);

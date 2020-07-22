@@ -20,6 +20,11 @@ int		event_keyup_process(SDL_Event *event, t_game *game)
 		game->state = G_MENU;
 		SDL_ShowCursor(1);
 	}
+	if (event->key.keysym.sym == SDLK_RETURN && game->endgame)
+	{
+		destroy_player(game);
+		create_payer(game);
+	}
 	if (event->key.keysym.sym == SDLK_t && game->walls)
 		game->walls->enabled = !game->walls->enabled;
 	if (event->key.keysym.sym == SDLK_LEFT)
@@ -49,6 +54,14 @@ void	render_process_game(t_game *game)
 {
 	render(game);
 	render_map(game);
+	if (game->endgame)
+		render_endgame(game);
+}
+
+int		check_endgame(t_game *game)
+{
+	return (game->level->endpos == (int)game->player->pos_x +
+				(int)game->player->pos_y * game->level->size_x);
 }
 
 void	process_process_game(t_game *game)
@@ -74,4 +87,5 @@ void	process_process_game(t_game *game)
 			, -game->fps * PLAYER_MOVE * game->player->watch_x);
 	}
 	game->player->move = PM_NONE;
+	game->endgame = (check_endgame(game));
 }

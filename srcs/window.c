@@ -58,7 +58,7 @@ int		create_window(t_game *game)
 	if (!(game->font))
 		return (FNT_ERR);
 	set_array_font(game->font,
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!_+=~e$%()\\/{}[]<>^*\"'");
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:;?!_+=~e$%()\\\\/{}[]<>^*\\\"'");
 	return (NO_ERR);
 }
 

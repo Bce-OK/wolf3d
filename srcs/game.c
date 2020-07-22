@@ -50,6 +50,26 @@ void	unlock_render(t_game *game)
 	}
 }
 
+void	render_endgame(t_game *game)
+{
+	SDL_Point	point;
+
+	point.x = (game->rect->w >> 1) - (game->font->letter_w << 3);
+	point.y = (game->rect->h - game->font->letter_h) >> 1;
+	print_str(game, point, game->font, "LEVEL");
+	point.x = (game->rect->w >> 1) - (game->font->letter_w << 1);
+	print_str(game, point, game->font, "COMPLETED!");
+	point.x = (game->rect->w >> 1) - (game->font->letter_w * 12);
+	point.y = (game->rect->h + game->font->letter_h) >> 1;
+	print_str(game, point, game->font, "PRESS");
+	point.x = (game->rect->w >> 1) - (game->font->letter_w << 2);
+	print_str(game, point, game->font, "<ENTER>");
+	point.x = (game->rect->w >> 1) + (game->font->letter_w << 2);
+	print_str(game, point, game->font, "TO");
+	point.x = (game->rect->w >> 1) + (game->font->letter_w << 3);
+	print_str(game, point, game->font, "RESTART");
+}
+
 void	render_game(t_game *game)
 {
 	SDL_Point	point;
