@@ -14,13 +14,13 @@
 #include <math.h>
 
 unsigned char	get_part_by_len(unsigned char max_bright,
-	numeric length, numeric max_length)
+		t_numeric length, t_numeric max_length)
 {
 	return (unsigned char)(max_bright / max_length * (max_length - length));
 }
 
 unsigned int	get_color_by_len(unsigned int max_bright,
-	numeric length, numeric max_length)
+		t_numeric length, t_numeric max_length)
 {
 	unsigned int	bright;
 
@@ -53,8 +53,8 @@ void			draw_line_by_y(unsigned int *pixels, SDL_Rect *view,
 	while (fabs(y - line->h) >= 1)
 	{
 		pixels[(int)x + (int)y * view->w] = color;
-		x += len_x / (numeric)abs(len_y);
-		y += len_y / fabs((numeric)len_y);
+		x += len_x / (t_numeric)abs(len_y);
+		y += len_y / fabs((t_numeric)len_y);
 	}
 }
 
@@ -73,8 +73,8 @@ void			draw_line_by_x(unsigned int *pixels, SDL_Rect *view,
 	while (fabs(x - line->w) >= 1)
 	{
 		pixels[(int)x + (int)y * view->w] = color;
-		y += len_y / fabs((numeric)len_x);
-		x += len_x / fabs((numeric)len_x);
+		y += len_y / fabs((t_numeric)len_x);
+		x += len_x / fabs((t_numeric)len_x);
 	}
 }
 

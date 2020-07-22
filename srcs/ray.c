@@ -25,7 +25,7 @@ unsigned int	get_color_by_type(int wall_type)
 }
 
 unsigned int	get_wall_color(t_ray *ray, t_game *game,
-		numeric y, numeric height)
+						t_numeric y, t_numeric height)
 {
 	int				type;
 	unsigned int	color;

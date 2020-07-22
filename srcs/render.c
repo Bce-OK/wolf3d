@@ -13,7 +13,7 @@
 #include "wolf3d.h"
 #include <math.h>
 
-void	draw(t_game *game, int i, numeric dist, t_ray *ray)
+void	draw(t_game *game, int i, t_numeric dist, t_ray *ray)
 {
 	int				space;
 	int				y;
@@ -39,9 +39,9 @@ void	draw(t_game *game, int i, numeric dist, t_ray *ray)
 
 void	start_ray(t_game *game, t_ray *ray, int x)
 {
-	numeric		camera_x;
-	numeric		plane_x;
-	numeric		plane_y;
+	t_numeric		camera_x;
+	t_numeric		plane_x;
+	t_numeric		plane_y;
 
 	camera_x = (x << 1) / (double)game->rect->w - 1;
 	plane_x = -game->player->watch_y;

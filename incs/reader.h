@@ -17,14 +17,17 @@
 #  define _CRT_SECURE_NO_WARNINGS
 #  include <stdio.h>
 #  include <io.h>
-#  define open _open
-#  define read _read
-#  define close _close
+#  define OPEN _open
+#  define READ _read
+#  define CLOSE _close
 # else
 #  include <unistd.h>
+#  define OPEN open
+#  define READ read
+#  define CLOSE close
 # endif
 # include <fcntl.h>
-# define	ACTUAL_VERSION	1
+# define ACTUAL_VERSION	1
 
 int		read_buffer(int fd, size_t size, void *ret);
 int		mapreader(int fd, t_map *map, int version);

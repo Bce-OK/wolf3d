@@ -33,16 +33,16 @@ int				get_wall_type(t_ray *ray, t_game *game)
 	}
 }
 
-unsigned int	get_texture_pixel(t_texture *tex, numeric x,
-	numeric y, numeric height)
+unsigned int	get_texture_pixel(t_texture *tex, t_numeric x,
+						t_numeric y, t_numeric height)
 {
 	unsigned int	color;
 
-	x = (x * TEX_REPEAT_COUNT * (numeric)tex->rect->w);
+	x = (x * TEX_REPEAT_COUNT * (t_numeric)tex->rect->w);
 	x = ((int)x % (tex->rect->w));
 	x += tex->rect->w * tex->num;
-	y = ((int)((numeric)y * TEX_REPEAT_COUNT * (numeric)tex->rect->h /
-		(numeric)height) % (tex->rect->h));
+	y = ((int)((t_numeric)y * TEX_REPEAT_COUNT * (t_numeric)tex->rect->h /
+		(t_numeric)height) % (tex->rect->h));
 	color = 0xff000000u |
 		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width)] |
 		tex->pixels[tex->bpp * ((int)x + (int)y * tex->width) + 1] << 8u |

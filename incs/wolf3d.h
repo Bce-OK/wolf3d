@@ -11,41 +11,41 @@
 /* ************************************************************************** */
 
 #ifndef WOLF3D_H
-#include "SDL2/SDL.h"
 # define WOLF3D_H
+# include "SDL2/SDL.h"
 
-# define	WIN_SIZE_W			1600
-# define	WIN_SIZE_H			900
-# define	WIN_POS_X			SDL_WINDOWPOS_UNDEFINED
-# define	WIN_POS_Y			SDL_WINDOWPOS_UNDEFINED
-# define	WIN_TITLE			"Wolf 3D"
-# define 	SIZE_RECT			20.0
-# define 	EDITOR_SIZE_RECT	50
-# define	SOFTWARE			1
-# define	MAX_LETTERS_COUNT	255
+# define WIN_SIZE_W				1600
+# define WIN_SIZE_H				900
+# define WIN_POS_X				SDL_WINDOWPOS_UNDEFINED
+# define WIN_POS_Y				SDL_WINDOWPOS_UNDEFINED
+# define WIN_TITLE				"Wolf 3D"
+# define SIZE_RECT				20.0
+# define EDITOR_SIZE_RECT		50
+# define SOFTWARE				1
+# define MAX_LETTERS_COUNT		255
 
-# define	PLAYER_ROTATE		(3.14159 / 3600)
-# define	PLAYER_MOVE			0.0025
-# define	TIMEOUT_MILISEC		30
-# define	MAX_DISTANCE		5.0
+# define PLAYER_ROTATE			(3.14159 / 3600)
+# define PLAYER_MOVE			0.0025
+# define TIMEOUT_MILISEC		30
+# define MAX_DISTANCE			5.0
 
-# define	FD_ERR				2
-# define	NO_ERR				0
-# define	SIZE_ERR			-1
-# define	MEM_ERR				-2
-# define	VERSION_ERR			-3
-# define	SDL_ERR				-4
-# define	MAP_ERR				-5
-# define	PLY_ERR				-6
-# define	FNT_ERR				-7
+# define FD_ERR					2
+# define NO_ERR					0
+# define SIZE_ERR				-1
+# define MEM_ERR				-2
+# define VERSION_ERR			-3
+# define SDL_ERR				-4
+# define MAP_ERR				-5
+# define PLY_ERR				-6
+# define FNT_ERR				-7
 
-# define	TEX_REPEAT_COUNT	8
-# define	NORTH_WALL			6
-# define	SOUTH_WALL			0
-# define	EAST_WALL			1
-# define	WEST_WALL			7
+# define TEX_REPEAT_COUNT		8
+# define NORTH_WALL				6
+# define SOUTH_WALL				0
+# define EAST_WALL				1
+# define WEST_WALL				7
 
-typedef double				numeric;
+typedef double				t_numeric;
 
 typedef enum				e_game_state
 {
@@ -81,10 +81,10 @@ typedef struct				s_font
 
 typedef struct				s_player
 {
-	numeric					pos_x;
-	numeric					pos_y;
-	numeric					watch_x;
-	numeric					watch_y;
+	t_numeric				pos_x;
+	t_numeric				pos_y;
+	t_numeric				watch_x;
+	t_numeric				watch_y;
 	int						prev_mouse_x;
 	t_move					move;
 	int						is_running;
@@ -122,21 +122,21 @@ typedef struct				s_ray
 	int						step_y;
 	int						hit;
 	int						side;
-	numeric					wall_x;
+	t_numeric				wall_x;
 }							t_ray;
 
 typedef struct				s_mouse
 {
-	int 					x;
-	int 					y;
-	int 					button;
+	int						x;
+	int						y;
+	int						button;
 }							t_mouse;
 
 typedef struct				s_texture
 {
 	SDL_Rect				*rect;
 	int						width;
-	int 					height;
+	int						height;
 	unsigned char			*pixels;
 	int						bpp;
 	int						num;
@@ -158,7 +158,7 @@ typedef struct				s_game
 	t_map					*level;
 	t_texture				*walls;
 	int						is_software;
-	numeric					fps;
+	t_numeric				fps;
 	t_font					*font;
 	t_mouse					*mouse;
 	t_menu_button			*menu;
@@ -187,7 +187,7 @@ void						destroy_player(t_game *game);
 void						destroy_menu(t_game *game);
 int							destroy_window(t_game *game);
 
-int 						event_loop(void *game);
+int							event_loop(void *game);
 void						pool_all_events(t_game *game, SDL_Event *event);
 void						render_map(t_game *game);
 int							render(t_game *game);
@@ -195,23 +195,22 @@ void						render_endgame(t_game *game);
 
 void						casting(t_game *game, t_ray *ray);
 void						move_player(t_game *game,
-	numeric speed_x, numeric speed_y);
-void						rotate_player(const t_game *game, numeric speed);
+										t_numeric speed_x, t_numeric speed_y);
+void						rotate_player(const t_game *game, t_numeric speed);
 unsigned int				get_wall_color(t_ray *ray, t_game *game,
-	numeric y, numeric height);
+										t_numeric y, t_numeric height);
 int							get_wall_type(t_ray *ray, t_game *game);
 unsigned int				get_color_by_len(unsigned int max_bright,
-	numeric length, numeric max_length);
-unsigned int				get_texture_pixel(t_texture *tex, numeric x,
-	numeric y, numeric height);
+									t_numeric length, t_numeric max_length);
+unsigned int				get_texture_pixel(t_texture *tex, t_numeric x,
+									t_numeric y, t_numeric height);
 SDL_Rect					create_rect(int x, int y, int w, int h);
 void						fill_rect(unsigned int *pixels, SDL_Rect *view,
 	SDL_Rect *rect, unsigned int color);
 void						draw_line(unsigned int *pixels, SDL_Rect *view,
-	SDL_Rect *line,	unsigned int color);
+	SDL_Rect *line, unsigned int color);
 
-
-t_font						*load_font(char* filename, int rows_count,
+t_font						*load_font(char *filename, int rows_count,
 	int cols_count);
 int							set_array_font(t_font *font, char *array);
 void						free_font(t_font *pfont);
@@ -226,4 +225,4 @@ int							event_keyup_editor(SDL_Event *event, t_game *game);
 int							event_mouse_process(SDL_Event *event, t_game *game);
 int							event_mouse_menu(SDL_Event *event, t_game *game);
 int							event_mouse_editor(SDL_Event *event, t_game *game);
-#endif //WOLF3D_H
+#endif

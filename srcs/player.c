@@ -15,7 +15,7 @@
 
 int		create_payer(t_game *game)
 {
-	numeric		size;
+	t_numeric		size;
 
 	size = 1.0;
 	game->player = ft_memalloc(sizeof(t_player));
@@ -29,11 +29,11 @@ int		create_payer(t_game *game)
 	return (NO_ERR);
 }
 
-void	move_player(t_game *game, numeric speed_x, numeric speed_y)
+void	move_player(t_game *game, t_numeric speed_x, t_numeric speed_y)
 {
-	int		next_x;
-	int		next_y;
-	numeric	speed;
+	int			next_x;
+	int			next_y;
+	t_numeric	speed;
 
 	speed = game->player->is_running ? 1.0 : 3.0;
 	next_x = (int)(game->player->pos_x + speed * speed_x);
@@ -48,10 +48,10 @@ void	move_player(t_game *game, numeric speed_x, numeric speed_y)
 	game->player->pos_y += speed * speed_y;
 }
 
-void	rotate_player(const t_game *game, numeric speed)
+void	rotate_player(const t_game *game, t_numeric speed)
 {
-	numeric			old_watch_x;
-	numeric			angle;
+	t_numeric			old_watch_x;
+	t_numeric			angle;
 
 	old_watch_x = game->player->watch_x;
 	angle = (speed);
